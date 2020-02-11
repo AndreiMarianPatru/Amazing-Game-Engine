@@ -1,2 +1,19 @@
 ﻿  ResourceManager.cpp
-  Amazing Game Engine.vcxproj -> C:\Users\Andrei-Marian\Desktop\game-engine\Amazing Game Engine\Debug\Amazing Game Engine.exe
+C:\Users\Andrei-Marian\Desktop\game-engine\Amazing Game Engine\ResourceManager.cpp(13,68): error C2664: 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,sf::Sprite>>>> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::insert(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::string,sf::Sprite>>>>,const std::pair<const std::string,sf::Sprite> &)': cannot convert argument 1 from 'std::pair<std::string,sf::Sprite *>' to 'std::pair<const std::string,sf::Sprite> &&'
+          with
+          [
+              _Kty=std::string,
+              _Ty=sf::Sprite,
+              _Pr=std::less<std::string>,
+              _Alloc=std::allocator<std::pair<const std::string,sf::Sprite>>
+          ]
+C:\Users\Andrei-Marian\Desktop\game-engine\Amazing Game Engine\ResourceManager.cpp(13,68): message : Reason: cannot convert from 'std::pair<std::string,sf::Sprite *>' to 'std::pair<const std::string,sf::Sprite>'
+C:\Users\Andrei-Marian\Desktop\game-engine\Amazing Game Engine\ResourceManager.cpp(13,54): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\xtree(1341,3): message : see declaration of 'std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::insert'
+          with
+          [
+              _Kty=std::string,
+              _Ty=sf::Sprite,
+              _Pr=std::less<std::string>,
+              _Alloc=std::allocator<std::pair<const std::string,sf::Sprite>>
+          ]

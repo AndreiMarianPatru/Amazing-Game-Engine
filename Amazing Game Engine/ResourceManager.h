@@ -10,7 +10,7 @@ public:
 	ResourceManager();
 	~ResourceManager();
 
-	std::map<std::string, sf::Sprite> images;
+	std::map<std::string, sf::Sprite*> images;
 
 	void loadImageWithName(std::string name, std::string loaction);
 	
