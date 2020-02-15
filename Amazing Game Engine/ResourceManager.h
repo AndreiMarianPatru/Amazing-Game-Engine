@@ -11,8 +11,11 @@ public:
 	~ResourceManager();
 
 	std::map<std::string, sf::Sprite*> images;
+	std::map<std::string, sf::Sound*> sounds;
 
-	void loadImageWithName(std::string name, std::string loaction);
+
+	void loadImageWithName(std::string name, std::string location);
+	void loadSoundWithName(std::string name, std::string location);
 	
 };
 
