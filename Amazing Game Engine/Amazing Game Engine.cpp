@@ -12,6 +12,7 @@ int main()
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
     ResourceManager* myresource_manager =new ResourceManager();
+    myresource_manager->loadImageWithName("random", "assets/random.jpg");
     myresource_manager->loadImageWithName("flag","assets/flag.png");
     while (window.isOpen())
     {
@@ -29,7 +30,7 @@ int main()
         window.draw(shape);
         for (auto image:myresource_manager->images)
         {
-            window.draw(image.second);
+            window.draw(*image.second);
         }
         window.display();
     }
