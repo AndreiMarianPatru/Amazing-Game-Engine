@@ -26,3 +26,14 @@ void ResourceManager::loadSoundWithName(std::string name, std::string location)
     sound->setBuffer(*buffer);
     sounds.insert(std::pair<std::string, sf::Sound*>(name, sound));
 }
+
+sf::Sprite ResourceManager::searchForImage(std::string name)
+{
+    if (images.find(name)==images.end())
+        std::cout << "image " << name << " not found";
+    else
+        return *images.find(name)->second;
+        
+   
+
+}

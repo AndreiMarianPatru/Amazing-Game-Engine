@@ -16,6 +16,7 @@ public:
 
 	void loadImageWithName(std::string name, std::string location);
 	void loadSoundWithName(std::string name, std::string location);
+	sf::Sprite searchForImage(std::string name);
 	
 };
 

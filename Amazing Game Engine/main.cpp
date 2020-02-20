@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "ResourceManager.h"
+#include "entity.h"
 
 using namespace std;
 
@@ -11,11 +12,14 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
-    ResourceManager* myresource_manager =new ResourceManager();
-    myresource_manager->loadImageWithName("random", "assets/random.jpg");
-    myresource_manager->loadImageWithName("flag","assets/flag.png");
-    myresource_manager->loadSoundWithName("sound1", "assets/sound1.wav");
-
+    ResourceManager* resource_manager =new ResourceManager();
+    resource_manager->loadImageWithName("random", "assets/random.jpg");
+    resource_manager->loadImageWithName("flag","assets/flag.png");
+    resource_manager->loadSoundWithName("sound1", "assets/sound1.wav");
+    BaseEntity* player = new BaseEntity();
+    player->setSprite(resource_manager->searchForImage("random"));
+    player->setPosition(100, 100);
+    player->Initialize();
     //myresource_manager->sounds.begin()->second->play();
   
 	while (window.isOpen())
@@ -32,9 +36,14 @@ int main()
 
         window.clear();
         window.draw(shape);
-        for (auto image:myresource_manager->images)
+        for (auto image:resource_manager->images)
         {
-            window.draw(*image.second);
+            //window.draw(*image.second);
+        }
+
+        for (auto entity : BaseEntity::Renderables)
+        {
+            window.draw(entity->GetSprite(), entity->getTransform());
         }
         window.display();
     }
