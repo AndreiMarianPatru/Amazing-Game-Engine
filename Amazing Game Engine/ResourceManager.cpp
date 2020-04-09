@@ -37,3 +37,21 @@ sf::Sprite ResourceManager::searchForImage(std::string name)
    
 
 }
+
+void ResourceManager::playsound(std::string name)
+{
+	for (auto it = sounds.begin(); it != sounds.end(); ++it)
+	{
+		if(it->first==name)
+		{
+            it->second->play();
+			return;			
+		}
+	}
+	std::cout<<"there is no such sound like this "<<name<<std::endl;
+	return;
+	
+
+}
+
+

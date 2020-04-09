@@ -3,18 +3,18 @@
 
 
 std::vector<BaseEntity*> BaseEntity::Renderables;
-BaseEntity::BaseEntity()
+BaseEntity::BaseEntity(b2World* world)
 {
 	// with no further information, we make some assumptions and set default values.
 	filename = "assets\\boid.png";
 	colourTint = sf::Color::White;
-
+	this->world=world;
 }
 
 BaseEntity::BaseEntity(std::string file) : filename(file)
 {
 	// with just a texture file, we default to a white tint (so no tint at all).
-	colourTint = sf::Color::White;
+	//colourTint = sf::Color::White;
 }
 
 BaseEntity::BaseEntity(std::string file, sf::Color colour) : filename(file), colourTint(colour)

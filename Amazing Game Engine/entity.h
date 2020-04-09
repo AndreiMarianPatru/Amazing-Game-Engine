@@ -12,6 +12,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <math.h>
+#include <box2d.h>
 
  // we need to tell the compiler that it's ok to use the default defines from math.h, if we don't, we don't get access to M_PI!
 #define _USE_MATH_DEFINES
@@ -28,14 +29,10 @@ public:
 	sf::Vector2f velocity;
 
 
-
-
-
-public:
 	/**
 	 * Base constructor, defaults all variables.
 	 */
-	explicit BaseEntity();
+	explicit BaseEntity(b2World* world);
 	/**
 	 * Constructor that accepts a texture file name
 	 * @param file a string filename
@@ -81,7 +78,9 @@ public:
 	void SetTextureFile(std::string file) { filename = file; }
 
 	void setSprite(sf::Sprite newsprite);
-
+	private:
+	b2World* world;
+	
 
 
 protected:
