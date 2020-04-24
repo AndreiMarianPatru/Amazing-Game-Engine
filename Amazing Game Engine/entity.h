@@ -13,6 +13,8 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 #include <box2d.h>
+static const float SCALE = 30.f;
+
 
  // we need to tell the compiler that it's ok to use the default defines from math.h, if we don't, we don't get access to M_PI!
 #define _USE_MATH_DEFINES
@@ -37,14 +39,7 @@ public:
 	 * Constructor that accepts a texture file name
 	 * @param file a string filename
 	 */
-	explicit BaseEntity(std::string file);
-	/**
-	 * Constructor that accepts a texture file name and a colour tint
-	 * @param file a string filename
-	 * @param colour a sf::Color value
-	 */
-	explicit BaseEntity(std::string file, sf::Color colour);
-
+	
 	/**
 	 * Deconstructor
 	 */
@@ -77,9 +72,18 @@ public:
 	*/
 	void SetTextureFile(std::string file) { filename = file; }
 
+	void m_setposition(float x, float y);
+
+	void m_update()
+	{
+		this->setPosition(this->body->GetPosition().x*SCALE,this->body->GetPosition().y*SCALE);
+	}
+	
+
 	void setSprite(sf::Sprite newsprite);
-	private:
+	public:
 	b2World* world;
+	b2Body* body;
 	
 
 

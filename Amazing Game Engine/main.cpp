@@ -9,7 +9,7 @@
 
 using namespace std;
 
-static const float SCALE = 30.f;
+
 
 int main()
 {
@@ -24,7 +24,7 @@ int main()
 
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, 40.0f);
+	groundBodyDef.position.Set(0.0f, 30.0f);
 
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
@@ -40,29 +40,29 @@ int main()
 	// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
 
-	// Define the dynamic body. We set its position and call the body factory.
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(0.0f, 4.0f);
-	b2Body* body = world.CreateBody(&bodyDef);
+	//// Define the dynamic body. We set its position and call the body factory.
+	//b2BodyDef bodyDef;
+	//bodyDef.type = b2_dynamicBody;
+	//bodyDef.position.Set(0.0f, 4.0f);
+	//b2Body* body = world.CreateBody(&bodyDef);
 
-	// Define another box shape for our dynamic body.
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(1.0f, 1.0f);
-	
+	//// Define another box shape for our dynamic body.
+	//b2PolygonShape dynamicBox;
+	//dynamicBox.SetAsBox(1.0f, 1.0f);
+	//
 
-	// Define the dynamic body fixture.
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
+	//// Define the dynamic body fixture.
+	//b2FixtureDef fixtureDef;
+	//fixtureDef.shape = &dynamicBox;
 
-	// Set the box density to be non-zero, so it will be dynamic.
-	fixtureDef.density = 1.0f;
+	//// Set the box density to be non-zero, so it will be dynamic.
+	//fixtureDef.density = 1.0f;
 
-	// Override the default friction.
-	fixtureDef.friction = 0.3f;
+	//// Override the default friction.
+	//fixtureDef.friction = 0.3f;
 
-	// Add the shape to the body.
-	body->CreateFixture(&fixtureDef);
+	//// Add the shape to the body.
+	//body->CreateFixture(&fixtureDef);
 
 	// Prepare for simulation. Typically we use a time step of 1/60 of a
 	// second (60Hz) and 10 iterations. This provides a high quality simulation
@@ -71,8 +71,7 @@ int main()
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	b2Vec2 position = body->GetPosition();
-	float angle = body->GetAngle();
+	
 
 	// This is our little game loop.
 	//for (int32 i = 0; i < 600; ++i)
@@ -92,12 +91,14 @@ int main()
     resource_manager->loadImageWithName("random", "assets/random.jpg");
     resource_manager->loadImageWithName("flag","assets/flag.png");
     resource_manager->loadSoundWithName("sound1", "assets/sound1.wav");
-    BaseEntity* player = new BaseEntity(&world);
+
+
+	BaseEntity* player = new BaseEntity(&world);
     player->setSprite(resource_manager->searchForImage("random"));
-    player->setPosition(300, 100);
+    player->m_setposition(10, 0);
     player->Initialize();
     resource_manager->playsound("sound1s");
-  
+    std::cout<<world.GetBodyCount();
 	while (window.isOpen())
     {
 	
@@ -119,20 +120,18 @@ int main()
 
 		 window.clear();
 		
-		// Now print the position and angle of the body.
-		position = body->GetPosition();
-		angle = body->GetAngle();
+	
+		
 
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-		player->setPosition(body->GetPosition().x*SCALE,body->GetPosition().y*SCALE);
-        for (auto image:resource_manager->images)
-        {
-            //window.draw(*image.second);
-        }
+		std::cout<<player->body->GetPosition().x<<" "<<player->body->GetPosition().y<<std::endl;
+	
+      
 
         for (auto entity : BaseEntity::Renderables)
         {
+        	entity->m_update();
             window.draw(entity->GetSprite(), entity->getTransform());
+        	
         }
 		
         window.display();

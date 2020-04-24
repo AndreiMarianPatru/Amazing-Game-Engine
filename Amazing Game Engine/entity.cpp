@@ -9,18 +9,25 @@ BaseEntity::BaseEntity(b2World* world)
 	filename = "assets\\boid.png";
 	colourTint = sf::Color::White;
 	this->world=world;
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(0.0f, 4.0f);
+	this->body = this->world->CreateBody(&bodyDef);
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(1.0f, 1.0f);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
+	body->CreateFixture(&fixtureDef);
+
+	
+	
 }
 
-BaseEntity::BaseEntity(std::string file) : filename(file)
-{
-	// with just a texture file, we default to a white tint (so no tint at all).
-	//colourTint = sf::Color::White;
-}
 
-BaseEntity::BaseEntity(std::string file, sf::Color colour) : filename(file), colourTint(colour)
-{
 
-}
 
 BaseEntity::~BaseEntity()
 {
@@ -33,6 +40,12 @@ void BaseEntity::Think()
 	sf::Vector2f pos = getPosition() + (velocity * 0.1f);
 	// update our position
 	setPosition(pos);
+}
+
+void BaseEntity::m_setposition(float x, float y)
+{
+	this->body->SetTransform(b2Vec2(x,y),0);
+	this->setPosition(x*SCALE,y*SCALE);	
 }
 
 void BaseEntity::setSprite(sf::Sprite newsprite)
