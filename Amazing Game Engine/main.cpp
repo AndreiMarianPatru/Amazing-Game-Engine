@@ -110,6 +110,30 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+        	 if (event.type == sf::Event::EventType::KeyPressed)
+			 {
+				if (event.key.code == sf::Keyboard::W)
+				{
+					std::cout<<"space";
+					player->body->ApplyForce( b2Vec2(0,-2000), player->body->GetWorldCenter(),true );        
+				 }
+			 }
+        	 if (event.type == sf::Event::EventType::KeyPressed)
+			 {
+				if (event.key.code == sf::Keyboard::D)
+				{
+					std::cout<<"space";
+					player->body->ApplyLinearImpulse( b2Vec2(10,0), player->body->GetWorldCenter(),true );        
+				 }
+			 }
+        	if (event.type == sf::Event::EventType::KeyPressed)
+			 {
+				if (event.key.code == sf::Keyboard::A)
+				{
+					std::cout<<"space";
+					player->body->ApplyLinearImpulse( b2Vec2(-10,0), player->body->GetWorldCenter(),true );        
+				 }
+			 }
         }
 
         window.clear();
@@ -123,7 +147,7 @@ int main()
 	
 		
 
-		std::cout<<player->body->GetPosition().x<<" "<<player->body->GetPosition().y<<std::endl;
+		//std::cout<<player->body->GetPosition().x<<" "<<player->body->GetPosition().y<<std::endl;
 	
       
 

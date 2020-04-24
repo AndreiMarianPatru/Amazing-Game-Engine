@@ -19,7 +19,7 @@ BaseEntity::BaseEntity(b2World* world)
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
+	fixtureDef.friction = 1.0f;
 	body->CreateFixture(&fixtureDef);
 
 	
