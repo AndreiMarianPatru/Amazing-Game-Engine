@@ -74,14 +74,14 @@ public:
 
 	void m_setposition(float x, float y);
 
-	void m_update()
-	{
-		this->setPosition(this->body->GetPosition().x*SCALE,this->body->GetPosition().y*SCALE);
-	}
+	void m_update();
+	
 	
 
 	void setSprite(sf::Sprite newsprite);
-	public:
+	void m_setshapeb2d();
+	void m_setfrictionb2d(float value);
+public:
 	b2World* world;
 	b2Body* body;
 	

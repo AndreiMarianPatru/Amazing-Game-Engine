@@ -25,6 +25,7 @@ int main()
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, 30.0f);
+	
 
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
@@ -35,10 +36,11 @@ int main()
 	b2PolygonShape groundBox;
 
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(50.0f, 10.0f);
+	groundBox.SetAsBox(500.0f, 10.0f);
 
 	// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
+	
 
 	//// Define the dynamic body. We set its position and call the body factory.
 	//b2BodyDef bodyDef;
@@ -90,14 +92,28 @@ int main()
     ResourceManager* resource_manager =new ResourceManager();
     resource_manager->loadImageWithName("random", "assets/random.jpg");
     resource_manager->loadImageWithName("flag","assets/flag.png");
+    resource_manager->loadImageWithName("bob","assets/bob.png");
     resource_manager->loadSoundWithName("sound1", "assets/sound1.wav");
 
 
 	BaseEntity* player = new BaseEntity(&world);
     player->setSprite(resource_manager->searchForImage("random"));
-    player->m_setposition(10, 0);
     player->Initialize();
-    resource_manager->playsound("sound1s");
+    player->m_setposition(10, 0);
+	player->m_setshapeb2d();
+	player->m_setfrictionb2d(2.0f);
+	
+
+	/*BaseEntity* npc1= new BaseEntity(&world);
+	npc1->setSprite(resource_manager->searchForImage("flag"));
+	npc1->Initialize();
+	npc1->m_setposition(20,0);
+	npc1->m_setshapeb2d();*/
+	//npc1->m_setfrictionb2d(2.0f);
+	
+
+	
+    resource_manager->playsound("sound1");
     std::cout<<world.GetBodyCount();
 	while (window.isOpen())
     {
@@ -145,9 +161,11 @@ int main()
 		 window.clear();
 		
 	
-		
+	
 
-		//std::cout<<player->body->GetPosition().x<<" "<<player->body->GetPosition().y<<std::endl;
+		//std::cout<<player->body->GetPosition().x<<" "<<player->body->GetPosition().y;
+
+		//player->setRotation(player->getRotation()+1);
 	
       
 
