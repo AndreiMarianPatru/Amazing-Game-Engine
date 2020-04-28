@@ -20,7 +20,7 @@ int main()
 	b2Vec2 gravity(0.0f, 10.0f);
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
-	b2World world(gravity);
+	b2World* world=new b2World(gravity);
 
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
@@ -30,7 +30,7 @@ int main()
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
 	// The body is also added to the world.
-	b2Body* groundBody = world.CreateBody(&groundBodyDef);
+	b2Body* groundBody = world->CreateBody(&groundBodyDef);
 
 	// Define the ground box shape.
 	b2PolygonShape groundBox;
@@ -96,7 +96,7 @@ int main()
     resource_manager->loadSoundWithName("sound1", "assets/sound1.wav");
 
 
-	BaseEntity* player = new BaseEntity(&world);
+	BaseEntity* player = new BaseEntity(world);
     player->setSprite(resource_manager->searchForImage("random"));
     player->Initialize();
     player->m_setposition(10, 0);
@@ -111,10 +111,29 @@ int main()
 	npc1->m_setshapeb2d();*/
 	//npc1->m_setfrictionb2d(2.0f);
 	
-
+	//a static body
+	b2BodyDef myBodyDef;
+	myBodyDef.type = b2_staticBody;
+	myBodyDef.position.Set(0, 0);
+	b2Body* staticBody = world->CreateBody(&myBodyDef);
+	b2PolygonShape polygonShape;
+	polygonShape.SetAsBox(1, 1);
+	b2FixtureDef myFixtureDef;
+	myFixtureDef.shape = &polygonShape;
+	myFixtureDef.density = 1;
+	//add four walls to the static body
+	polygonShape.SetAsBox(20, 1, b2Vec2(0, 0), 0);//ground
+	staticBody->CreateFixture(&myFixtureDef);
+	polygonShape.SetAsBox(20, 1, b2Vec2(0, 40), 0);//ceiling
+	staticBody->CreateFixture(&myFixtureDef);
+	polygonShape.SetAsBox(1, 20, b2Vec2(-20, 20), 0);//left wall
+	staticBody->CreateFixture(&myFixtureDef);
+	polygonShape.SetAsBox(1, 20, b2Vec2(20, 20), 0);//right wall
+	staticBody->CreateFixture(&myFixtureDef);
+	
 	
     resource_manager->playsound("sound1");
-    std::cout<<world.GetBodyCount();
+    std::cout<<world->GetBodyCount();
 	while (window.isOpen())
     {
 	
@@ -156,7 +175,7 @@ int main()
 
 		// Instruct the world to perform a single step of simulation.
 		// It is generally best to keep the time step and iterations fixed.
-		world.Step(timeStep, velocityIterations, positionIterations);
+		world->Step(timeStep, velocityIterations, positionIterations);
 
 		 window.clear();
 		
