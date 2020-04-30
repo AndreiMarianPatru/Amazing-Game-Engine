@@ -6,6 +6,7 @@
 #include "entity.h"
 #include "box2d.h"
 #include <stdio.h>
+#include "Input.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1500, 1000), "SFML works!");
 	window.setFramerateLimit(60);
+	Input* input = new Input();
 
     // Define the gravity vector.
 	b2Vec2 gravity(0.0f, 10.0f);
@@ -122,13 +124,13 @@ int main()
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
 	//add four walls to the static body
-	polygonShape.SetAsBox(20, 1, b2Vec2(0, 0), 0);//ground
+	polygonShape.SetAsBox(20, 1, b2Vec2(25, 0), 0);//ground
 	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(20, 1, b2Vec2(0, 40), 0);//ceiling
+	polygonShape.SetAsBox(20, 1, b2Vec2(25, 40), 0);//ceiling
 	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(1, 20, b2Vec2(-20, 20), 0);//left wall
+	polygonShape.SetAsBox(1, 20, b2Vec2(5, 20), 0);//left wall
 	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(1, 20, b2Vec2(20, 20), 0);//right wall
+	polygonShape.SetAsBox(1, 20, b2Vec2(45, 20), 0);//right wall
 	staticBody->CreateFixture(&myFixtureDef);
 	
 	
@@ -136,40 +138,12 @@ int main()
     std::cout<<world->GetBodyCount();
 	while (window.isOpen())
     {
-	
+
+		input->CheckForInput(window);
 
         
     	
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        	 if (event.type == sf::Event::EventType::KeyPressed)
-			 {
-				if (event.key.code == sf::Keyboard::W)
-				{
-					std::cout<<"space";
-					player->body->ApplyForce( b2Vec2(0,-2000), player->body->GetWorldCenter(),true );        
-				 }
-			 }
-        	 if (event.type == sf::Event::EventType::KeyPressed)
-			 {
-				if (event.key.code == sf::Keyboard::D)
-				{
-					std::cout<<"space";
-					player->body->ApplyLinearImpulse( b2Vec2(10,0), player->body->GetWorldCenter(),true );        
-				 }
-			 }
-        	if (event.type == sf::Event::EventType::KeyPressed)
-			 {
-				if (event.key.code == sf::Keyboard::A)
-				{
-					std::cout<<"space";
-					player->body->ApplyLinearImpulse( b2Vec2(-10,0), player->body->GetWorldCenter(),true );        
-				 }
-			 }
-        }
+      
 
         window.clear();
 

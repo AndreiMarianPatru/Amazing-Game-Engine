@@ -2,3 +2,5 @@ C:\Users\Andrei-Marian\Desktop\Game-Engine\Amazing Game Engine\Debug\Amazing Gam
 C:\Users\Andrei-Marian\Desktop\Game-Engine\Amazing Game Engine\Debug\Amazing Game Engine.pdb
 C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\Debug\Amazing Game Engine.exe
 C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\Debug\Amazing Game Engine.pdb
+C:\Users\andre\OneDrive\Documents\GitHub\Amazing-Game-Engine\Amazing Game Engine\Debug\Amazing Game Engine.exe
+C:\Users\andre\OneDrive\Documents\GitHub\Amazing-Game-Engine\Amazing Game Engine\Debug\Amazing Game Engine.pdb
