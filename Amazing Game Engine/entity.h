@@ -35,7 +35,7 @@ public:
 	/**
 	 * Base constructor, defaults all variables.
 	 */
-	explicit BaseEntity(b2World* world);
+    BaseEntity(b2World* world);
 	/**
 	 * Constructor that accepts a texture file name
 	 * @param file a string filename
@@ -75,10 +75,8 @@ public:
 
 	void m_setposition(float x, float y);
 
-	void m_update(std::map<std::string,Input::states>* keyspressed);
+	virtual void m_update(std::map<std::string,Input::states>* keyspressed);
 	
-	
-
 	void setSprite(sf::Sprite newsprite);
 	void m_setshapeb2d();
 	void m_setfrictionb2d(float value);
@@ -86,8 +84,6 @@ public:
 	b2World* world;
 	b2Body* body;
 	
-
-
 protected:
 	std::string filename;
 	sf::Sprite sprite;
@@ -100,7 +96,13 @@ protected:
 	 * Initialize assures our texture is loaded using the assigned file name and initial colour tint
 	 */
 
-
 };
 
+class Player : public BaseEntity
+{
+public:
+	
 
+	Player(b2World* world);
+	void m_update(std::map<std::string,Input::states>* keyspressed);
+};

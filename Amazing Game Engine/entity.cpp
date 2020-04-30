@@ -19,13 +19,7 @@ BaseEntity::BaseEntity(b2World* world)
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.2f;
-	body->CreateFixture(&fixtureDef);
-
-
-	
-
-	
-	
+	body->CreateFixture(&fixtureDef);		
 }
 
 
@@ -49,6 +43,50 @@ void BaseEntity::m_setposition(float x, float y)
 
 void BaseEntity::m_update(std::map<std::string,Input::states>* keyspressed)
 {
+
+	
+     this->setPosition(this->body->GetPosition().x*SCALE,this->body->GetPosition().y*SCALE);
+	 this->setRotation(this->body->GetAngle());
+	 this->sprite.setRotation(this->getRotation());	}
+
+void BaseEntity::setSprite(sf::Sprite newsprite)
+{
+	sprite = newsprite;
+}
+
+void BaseEntity::m_setshapeb2d()
+{
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox((sprite.getTexture()->getSize().x/SCALE)/2, (sprite.getTexture()->getSize().y/SCALE)/2);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	body->CreateFixture(&fixtureDef);
+
+	
+}
+
+void BaseEntity::m_setfrictionb2d(float value)
+{
+	body->GetFixtureList()->SetFriction(value);
+}
+
+
+
+void BaseEntity::Initialize()
+{
+	
+	// add the entity to the list of renderables.
+	Renderables.push_back(this);
+}
+
+
+Player::Player(b2World* world): BaseEntity(world)
+{
+	
+}
+
+void Player::m_update(std::map<std::string, Input::states>* keyspressed)
+{
 	b2Vec2 vel = body->GetLinearVelocity();
     float desiredVel = 0;
 
@@ -69,39 +107,5 @@ void BaseEntity::m_update(std::map<std::string,Input::states>* keyspressed)
 	
      this->setPosition(this->body->GetPosition().x*SCALE,this->body->GetPosition().y*SCALE);
 	 this->setRotation(this->body->GetAngle());
-	 this->sprite.setRotation(this->getRotation());	}
-
-void BaseEntity::setSprite(sf::Sprite newsprite)
-{
-	sprite = newsprite;
+	 this->sprite.setRotation(this->getRotation());	
 }
-
-void BaseEntity::m_setshapeb2d()
-{
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(sprite.getTexture()->getSize().x/SCALE, sprite.getTexture()->getSize().y/SCALE);
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	body->CreateFixture(&fixtureDef);
-
-	
-}
-
-void BaseEntity::m_setfrictionb2d(float value)
-{
-	body->GetFixtureList()->SetFriction(value);
-}
-
-void BaseEntity::Initialize()
-{
-	
-	
-	
-	
-	
-
-	// add the entity to the list of renderables.
-	Renderables.push_back(this);
-}
-
-

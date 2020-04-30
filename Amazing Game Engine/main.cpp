@@ -98,12 +98,19 @@ int main()
     resource_manager->loadSoundWithName("sound1", "assets/sound1.wav");
 
 
-	BaseEntity* player = new BaseEntity(world);
-    player->setSprite(resource_manager->searchForImage("random"));
+	Player* player = new Player(world);
+    player->setSprite(resource_manager->searchForImage("bob"));
     player->Initialize();
     player->m_setposition(10, 10);
 	player->m_setshapeb2d();
 	player->m_setfrictionb2d(2.0f);
+
+	BaseEntity* enemy1 = new BaseEntity(world);
+    enemy1->setSprite(resource_manager->searchForImage("bob"));
+    enemy1->Initialize();
+    enemy1->m_setposition(20, 10);
+	enemy1->m_setshapeb2d();
+	enemy1->m_setfrictionb2d(2.0f);
 	
 
 	/*BaseEntity* npc1= new BaseEntity(&world);
