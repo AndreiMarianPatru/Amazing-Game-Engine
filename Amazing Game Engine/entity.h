@@ -13,6 +13,7 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 #include <box2d.h>
+#include "Input.h"
 static const float SCALE = 30.f;
 
 
@@ -74,7 +75,7 @@ public:
 
 	void m_setposition(float x, float y);
 
-	void m_update();
+	void m_update(std::map<std::string,Input::states>* keyspressed);
 	
 	
 

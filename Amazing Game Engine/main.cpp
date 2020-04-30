@@ -101,7 +101,7 @@ int main()
 	BaseEntity* player = new BaseEntity(world);
     player->setSprite(resource_manager->searchForImage("random"));
     player->Initialize();
-    player->m_setposition(10, 0);
+    player->m_setposition(10, 10);
 	player->m_setshapeb2d();
 	player->m_setfrictionb2d(2.0f);
 	
@@ -164,7 +164,7 @@ int main()
 
         for (auto entity : BaseEntity::Renderables)
         {
-        	entity->m_update();
+        	entity->m_update(input->keyspressed);
             window.draw(entity->GetSprite(), entity->getTransform());
         	
         }

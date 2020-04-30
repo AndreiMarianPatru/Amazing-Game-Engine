@@ -47,12 +47,29 @@ void BaseEntity::m_setposition(float x, float y)
 	this->setPosition(x*SCALE,y*SCALE);	
 }
 
-void BaseEntity::m_update()
-	{
-		this->setPosition(this->body->GetPosition().x*SCALE,this->body->GetPosition().y*SCALE);
-		this->setRotation(this->body->GetAngle());
-	this->sprite.setRotation(this->getRotation());
-	}
+void BaseEntity::m_update(std::map<std::string,Input::states>* keyspressed)
+{
+	b2Vec2 vel = body->GetLinearVelocity();
+    float desiredVel = 0;
+
+	
+	if(keyspressed->find("A")!=keyspressed->end())
+		desiredVel-=b2Max( vel.x - 0.1f, +10.0f );
+	if(keyspressed->find("D")!=keyspressed->end())
+		desiredVel+=b2Max( vel.x - 0.1f, +10.0f );
+	if(keyspressed->find("W")!=keyspressed->end()&&vel.y==0)
+		 body->ApplyLinearImpulse( b2Vec2(0,-100), body->GetWorldCenter(),1);
+
+
+	float velChange = desiredVel - vel.x;
+    float impulsex = body->GetMass() * velChange; //disregard time factor
+
+    body->ApplyLinearImpulse( b2Vec2(impulsex,0), body->GetWorldCenter(),1);
+	
+	
+     this->setPosition(this->body->GetPosition().x*SCALE,this->body->GetPosition().y*SCALE);
+	 this->setRotation(this->body->GetAngle());
+	 this->sprite.setRotation(this->getRotation());	}
 
 void BaseEntity::setSprite(sf::Sprite newsprite)
 {
