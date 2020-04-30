@@ -12,9 +12,10 @@ public:
 		right,
 		jump
 	};
+	std::map<std::string,states> keyspressed;
 
 	void CheckForInput(sf::Window &window);
-	void UseInput(+)
+	void UseInput();
 	
 };
 
