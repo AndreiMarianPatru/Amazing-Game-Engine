@@ -26,7 +26,7 @@ int main()
 
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, 30.0f);
+	groundBodyDef.position.Set(0.0f, 37.5f);
 	
 
 	// Call the body factory which allocates memory for the ground body
@@ -96,21 +96,43 @@ int main()
     resource_manager->loadImageWithName("flag","assets/flag.png");
     resource_manager->loadImageWithName("bob","assets/bob.png");
     resource_manager->loadSoundWithName("sound1", "assets/sound1.wav");
+	resource_manager->loadImageWithName("ground","assets/ground2.png");
 
+	
+
+		sf::Sprite sprite;
+	sprite=resource_manager->searchForImage("ground");
+	sprite.setPosition(0,850);
+	sprite.setScale(3.6f,1.0f);
+	
 
 	Player* player = new Player(world);
     player->setSprite(resource_manager->searchForImage("bob"));
     player->Initialize();
     player->m_setposition(10, 10);
-	player->m_setshapeb2d();
+	//player->m_setshapeb2d();
 	player->m_setfrictionb2d(2.0f);
 
 	BaseEntity* enemy1 = new BaseEntity(world);
     enemy1->setSprite(resource_manager->searchForImage("bob"));
     enemy1->Initialize();
     enemy1->m_setposition(20, 10);
-	enemy1->m_setshapeb2d();
+	//enemy1->m_setshapeb2d();
 	enemy1->m_setfrictionb2d(2.0f);
+	
+	BaseEntity* enemy2 = new BaseEntity(world);
+    enemy2->setSprite(resource_manager->searchForImage("bob"));
+    enemy2->Initialize();
+    enemy2->m_setposition(20, 5);
+	//enemy1->m_setshapeb2d();
+     enemy2->m_setfrictionb2d(2.0f);
+
+	BaseEntity* enemy3 = new BaseEntity(world);
+    enemy3->setSprite(resource_manager->searchForImage("bob"));
+    enemy3->Initialize();
+    enemy3->m_setposition(20, 3);
+	//enemy3->m_setshapeb2d();
+	enemy3->m_setfrictionb2d(2.0f);
 	
 
 	/*BaseEntity* npc1= new BaseEntity(&world);
@@ -131,8 +153,8 @@ int main()
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
 	//add four walls to the static body
-	polygonShape.SetAsBox(20, 1, b2Vec2(25, 0), 0);//ground
-	staticBody->CreateFixture(&myFixtureDef);
+	//polygonShape.SetAsBox(20, 1, b2Vec2(25, -10), 0);//ground
+	//staticBody->CreateFixture(&myFixtureDef);
 	polygonShape.SetAsBox(20, 1, b2Vec2(25, 40), 0);//ceiling
 	staticBody->CreateFixture(&myFixtureDef);
 	polygonShape.SetAsBox(1, 20, b2Vec2(5, 20), 0);//left wall
@@ -167,7 +189,7 @@ int main()
 
 		//player->setRotation(player->getRotation()+1);
 	
-      
+      window.draw(sprite);
 
         for (auto entity : BaseEntity::Renderables)
         {

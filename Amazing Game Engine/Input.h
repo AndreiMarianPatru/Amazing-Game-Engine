@@ -13,7 +13,7 @@ public:
 		jump
 	};
 	Input();
-	std::map<std::string,states>* keyspressed;//I need a map and not a list for to make  key remapping easier to implement
+	std::map<states,std::string>* keyspressed;//I need a map and not a list for to make  key remapping easier to implement
 
 	void CheckForInput(sf::Window &window);
 	void UseInput();

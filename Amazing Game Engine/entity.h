@@ -75,7 +75,7 @@ public:
 
 	void m_setposition(float x, float y);
 
-	virtual void m_update(std::map<std::string,Input::states>* keyspressed);
+	virtual void m_update(std::map<Input::states, std::string>* keyspressed);
 	
 	void setSprite(sf::Sprite newsprite);
 	void m_setshapeb2d();
@@ -104,5 +104,5 @@ public:
 	
 
 	Player(b2World* world);
-	void m_update(std::map<std::string,Input::states>* keyspressed);
+	void m_update(std::map<Input::states,std::string>* keyspressed);
 };

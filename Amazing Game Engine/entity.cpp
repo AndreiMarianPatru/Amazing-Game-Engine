@@ -6,15 +6,14 @@ std::vector<BaseEntity*> BaseEntity::Renderables;
 BaseEntity::BaseEntity(b2World* world)
 {
 	// with no further information, we make some assumptions and set default values.
-	filename = "assets\\boid.png";
-	colourTint = sf::Color::White;
+	
 	this->world=world;
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0.0f, 4.0f);
 	this->body = this->world->CreateBody(&bodyDef);
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(1,1);
+	dynamicBox.SetAsBox(2,3);
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
@@ -41,7 +40,7 @@ void BaseEntity::m_setposition(float x, float y)
 	this->setPosition(x*SCALE,y*SCALE);	
 }
 
-void BaseEntity::m_update(std::map<std::string,Input::states>* keyspressed)
+void BaseEntity::m_update(std::map<Input::states,std::string>* keyspressed)
 {
 
 	
@@ -85,18 +84,18 @@ Player::Player(b2World* world): BaseEntity(world)
 	
 }
 
-void Player::m_update(std::map<std::string, Input::states>* keyspressed)
+void Player::m_update(std::map< Input::states,std::string>* keyspressed)
 {
 	b2Vec2 vel = body->GetLinearVelocity();
     float desiredVel = 0;
+	std::map<std::string, Input::states>::iterator it;
 
-	
-	if(keyspressed->find("A")!=keyspressed->end())
+	if(keyspressed->find(Input::left)!=keyspressed->end())
 		desiredVel-=b2Max( vel.x - 0.1f, +10.0f );
-	if(keyspressed->find("D")!=keyspressed->end())
+	if(keyspressed->find(Input::right)!=keyspressed->end())
 		desiredVel+=b2Max( vel.x - 0.1f, +10.0f );
-	if(keyspressed->find("W")!=keyspressed->end()&&vel.y==0)
-		 body->ApplyLinearImpulse( b2Vec2(0,-100), body->GetWorldCenter(),1);
+	if(keyspressed->find(Input::jump)!=keyspressed->end()&&vel.y==0)
+		 body->ApplyLinearImpulse( b2Vec2(0,-250), body->GetWorldCenter(),1);
 
 
 	float velChange = desiredVel - vel.x;
@@ -106,6 +105,6 @@ void Player::m_update(std::map<std::string, Input::states>* keyspressed)
 	
 	
      this->setPosition(this->body->GetPosition().x*SCALE,this->body->GetPosition().y*SCALE);
-	 this->setRotation(this->body->GetAngle());
-	 this->sprite.setRotation(this->getRotation());	
+	// this->setRotation(this->body->GetAngle());
+	 //this->sprite.setRotation(this->getRotation());	
 }

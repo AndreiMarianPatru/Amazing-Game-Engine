@@ -9,11 +9,12 @@
 
 Input::Input()
 {
-	keyspressed=new std::map<std::string,states>();
+	keyspressed=new std::map<states,std::string>();
 }
 
 void Input::CheckForInput(sf::Window& window)
 {
+
 	/*std::cout<<"keys pressed: "<<std::endl;
 	std::map<std::string,states>::iterator it;
 	for(it= keyspressed->begin();it!=keyspressed->end();++it)
@@ -33,13 +34,13 @@ void Input::CheckForInput(sf::Window& window)
 		{
 			if (event.type == sf::Event::EventType::KeyPressed)
 			{
-				std::cout << "w";
-			 keyspressed->insert(std::pair<std::string, states>("W", jump));
+			
+			 keyspressed->insert(std::pair<states,std::string>(jump,"W"));
 			}				
 			else if(event.type == sf::Event::EventType::KeyReleased)
 			{
-				keyspressed->erase("W");
-				std::cout << " not w"<<std::endl;	
+				keyspressed->erase(jump);
+				
 			}			
 		}
 		
@@ -47,13 +48,13 @@ void Input::CheckForInput(sf::Window& window)
 		{
 			if (event.type == sf::Event::EventType::KeyPressed)
 			{
-				std::cout << "A";
-			 keyspressed->insert(std::pair<std::string, states>("A", jump));
+				
+			 keyspressed->insert(std::pair<states,std::string>(left,"A"));
 			}				
 			else if(event.type == sf::Event::EventType::KeyReleased)
 			{
-				keyspressed->erase("A");
-				std::cout << " not A"<<std::endl;	
+				keyspressed->erase(left);
+			
 			}			
 		}
 		
@@ -61,13 +62,13 @@ void Input::CheckForInput(sf::Window& window)
 		{
 			if (event.type == sf::Event::EventType::KeyPressed)
 			{
-				std::cout << "D";
-			 keyspressed->insert(std::pair<std::string, states>("D", jump));
+			
+			 keyspressed->insert(std::pair<states,std::string>(right,"D"));
 			}				
 			else if(event.type == sf::Event::EventType::KeyReleased)
 			{
-				keyspressed->erase("D");
-				std::cout << " not D"<<std::endl;	
+				keyspressed->erase(right);
+			
 			}			
 		}
 		
