@@ -157,12 +157,14 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\box2d-master\unit-test\doctest.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

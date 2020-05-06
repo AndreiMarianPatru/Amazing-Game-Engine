@@ -8,8 +8,10 @@
 #include <stdio.h>
 #include "Input.h"
 
-using namespace std;
 
+using namespace std;
+float screenWidth=1500;
+float screenHeight=1000;
 
 
 int main()
@@ -27,7 +29,7 @@ int main()
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, 37.5f);
-	
+
 
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
@@ -152,14 +154,13 @@ int main()
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
-	//add four walls to the static body
-	//polygonShape.SetAsBox(20, 1, b2Vec2(25, -10), 0);//ground
-	//staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(20, 1, b2Vec2(25, 40), 0);//ceiling
+
+	
+	polygonShape.SetAsBox(20, 1, b2Vec2(25, screenHeight/SCALE), 0);//ceiling
 	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(1, 20, b2Vec2(5, 20), 0);//left wall
+	polygonShape.SetAsBox(1, 20, b2Vec2(-(SCALE/10), 20), 0);//left wall
 	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(1, 20, b2Vec2(45, 20), 0);//right wall
+	polygonShape.SetAsBox(1, 20, b2Vec2((screenWidth/SCALE)-1, 20), 0);//right wall
 	staticBody->CreateFixture(&myFixtureDef);
 	
 	
@@ -197,7 +198,6 @@ int main()
             window.draw(entity->GetSprite(), entity->getTransform());
         	
         }
-		
         window.display();
     }
 

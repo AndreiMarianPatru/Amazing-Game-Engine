@@ -21,7 +21,36 @@ static const float SCALE = 30.f;
 #define _USE_MATH_DEFINES
 
 
-class BaseEntity : public sf::Transformable
+class Object: public sf::Transformable
+{
+	public:
+
+	int id{};
+	int ZOrder{};
+	
+	Object();
+	~Object();
+
+	void SetParent();
+	Object* GetParent();
+	void SetTransform(b2Transform* newTransform);
+	b2Transform GetTransform();
+	void AddChild(Object* object);
+	void RemoveChild(int id);
+
+	void Update();
+	void UpdateChildren();
+
+	
+	
+};
+
+
+
+
+
+
+class BaseEntity : public Object
 {
 public:
 	/**
@@ -82,7 +111,7 @@ public:
 	void m_setfrictionb2d(float value);
 public:
 	b2World* world;
-	b2Body* body;
+	b2Body* body{};
 	
 protected:
 	std::string filename;

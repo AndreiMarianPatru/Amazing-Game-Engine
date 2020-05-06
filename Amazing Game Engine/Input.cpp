@@ -24,7 +24,7 @@ void Input::CheckForInput(sf::Window& window)
 	}
 	std::cout<<std::endl;*/
 	
-	sf::Event event;
+	sf::Event event{};
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)

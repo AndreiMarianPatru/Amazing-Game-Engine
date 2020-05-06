@@ -3,22 +3,51 @@
 
 
 std::vector<BaseEntity*> BaseEntity::Renderables;
+
+Object::Object()
+{
+}
+
+Object::~Object()
+{
+}
+
+void Object::SetParent()
+{
+}
+
+Object* Object::GetParent()
+{
+}
+
+void Object::SetTransform(b2Transform* newTransform)
+{
+}
+
+b2Transform Object::GetTransform()
+{
+}
+
+void Object::AddChild(Object* object)
+{
+}
+
+void Object::RemoveChild(int id)
+{
+}
+
+void Object::Update()
+{
+}
+
+void Object::UpdateChildren()
+{
+}
+
 BaseEntity::BaseEntity(b2World* world)
 {
-	// with no further information, we make some assumptions and set default values.
+		this->world=world;
 	
-	this->world=world;
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(0.0f, 4.0f);
-	this->body = this->world->CreateBody(&bodyDef);
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(2,3);
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.2f;
-	body->CreateFixture(&fixtureDef);		
 }
 
 
@@ -74,8 +103,19 @@ void BaseEntity::m_setfrictionb2d(float value)
 void BaseEntity::Initialize()
 {
 	
-	// add the entity to the list of renderables.
 	Renderables.push_back(this);
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(0.0f, 4.0f);
+	this->body = this->world->CreateBody(&bodyDef);
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox((sprite.getTexture()->getSize().x/SCALE)/2, (sprite.getTexture()->getSize().y/SCALE)/2);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.1f;
+	body->CreateFixture(&fixtureDef);		
 }
 
 
@@ -95,7 +135,7 @@ void Player::m_update(std::map< Input::states,std::string>* keyspressed)
 	if(keyspressed->find(Input::right)!=keyspressed->end())
 		desiredVel+=b2Max( vel.x - 0.1f, +10.0f );
 	if(keyspressed->find(Input::jump)!=keyspressed->end()&&vel.y==0)
-		 body->ApplyLinearImpulse( b2Vec2(0,-250), body->GetWorldCenter(),1);
+		 body->ApplyLinearImpulse( b2Vec2(0,-450), body->GetWorldCenter(),1);
 
 
 	float velChange = desiredVel - vel.x;
