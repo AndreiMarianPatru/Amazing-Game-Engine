@@ -18,13 +18,13 @@
 static const float SCALE = 30.f;
 
 
- // we need to tell the compiler that it's ok to use the default defines from math.h, if we don't, we don't get access to M_PI!
+// we need to tell the compiler that it's ok to use the default defines from math.h, if we don't, we don't get access to M_PI!
 #define _USE_MATH_DEFINES
 
 
-class Object: public sf::Transformable
+class Object : public sf::Transformable
 {
-	public:
+public:
 
 	int id{};
 	std::string name;
@@ -32,8 +32,8 @@ class Object: public sf::Transformable
 	std::list<Object*> children;
 	Object* parent;
 	b2Transform transform;
-	
-	
+
+
 	Object(int id);
 	Object();
 	~Object();
@@ -41,7 +41,7 @@ class Object: public sf::Transformable
 	void SetParent(Object* parent);
 	Object* GetParent();
 	void SetTransform(b2Transform newTransform);
-	
+
 	b2Transform GetTransform();
 	void AddChild(Object* object);
 	void RemoveChild(int id);
@@ -50,12 +50,7 @@ class Object: public sf::Transformable
 	virtual void UpdateChildren();
 
 	void PrintChildren();
-	
 };
-
-
-
-
 
 
 class BaseEntity : public Object
@@ -72,12 +67,12 @@ public:
 	/**
 	 * Base constructor, defaults all variables.
 	 */
-    BaseEntity(b2World* world);
+	BaseEntity(b2World* world);
 	/**
 	 * Constructor that accepts a texture file name
 	 * @param file a string filename
 	 */
-	
+
 	/**
 	 * Deconstructor
 	 */
@@ -112,16 +107,16 @@ public:
 
 	void m_setposition(float x, float y);
 
-	
-    void Update(std::map<Input::states, std::string>* keyspressed) override ;
-	
+
+	void Update(std::map<Input::states, std::string>* keyspressed) override;
+
 	void setSprite(sf::Sprite newsprite);
 	void m_setshapeb2d();
 	void m_setfrictionb2d(float value);
 public:
 	b2World* world;
 	b2Body* body{};
-	
+
 protected:
 	std::string filename;
 	sf::Sprite sprite;
@@ -133,14 +128,13 @@ protected:
 	/**
 	 * Initialize assures our texture is loaded using the assigned file name and initial colour tint
 	 */
-
 };
 
 class Player : public BaseEntity
 {
 public:
-	
+
 
 	Player(b2World* world);
-	void Update(std::map<Input::states,std::string>* keyspressed) override;
+	void Update(std::map<Input::states, std::string>* keyspressed) override;
 };
