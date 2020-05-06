@@ -22,6 +22,7 @@ Object* Object::GetParent()
 
 void Object::SetTransform(b2Transform* newTransform)
 {
+	
 }
 
 b2Transform Object::GetTransform()

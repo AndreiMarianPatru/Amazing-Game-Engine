@@ -5,6 +5,7 @@
 class Scene
 {
 	std::list<Object*> objects;
+
 	
 
 	

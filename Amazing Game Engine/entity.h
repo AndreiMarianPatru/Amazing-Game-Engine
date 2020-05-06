@@ -34,6 +34,7 @@ class Object: public sf::Transformable
 	void SetParent();
 	Object* GetParent();
 	void SetTransform(b2Transform* newTransform);
+	
 	b2Transform GetTransform();
 	void AddChild(Object* object);
 	void RemoveChild(int id);

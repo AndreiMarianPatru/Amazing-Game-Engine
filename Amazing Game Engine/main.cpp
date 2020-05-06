@@ -169,6 +169,7 @@ int main()
 	while (window.isOpen())
     {
 
+		
 		input->CheckForInput(window);
 
         
