@@ -14,6 +14,7 @@
 #include <math.h>
 #include <box2d.h>
 #include "Input.h"
+#include <list>
 static const float SCALE = 30.f;
 
 
@@ -26,23 +27,29 @@ class Object: public sf::Transformable
 	public:
 
 	int id{};
+	std::string name;
 	int ZOrder{};
+	std::list<Object*> children;
+	Object* parent;
+	b2Transform transform;
 	
+	
+	Object(int id);
 	Object();
 	~Object();
 
-	void SetParent();
+	void SetParent(Object* parent);
 	Object* GetParent();
-	void SetTransform(b2Transform* newTransform);
+	void SetTransform(b2Transform newTransform);
 	
 	b2Transform GetTransform();
 	void AddChild(Object* object);
 	void RemoveChild(int id);
 
-	void Update();
-	void UpdateChildren();
+	virtual void Update(std::map<Input::states, std::string>* keyspressed);
+	virtual void UpdateChildren();
 
-	
+	void PrintChildren();
 	
 };
 
@@ -105,7 +112,8 @@ public:
 
 	void m_setposition(float x, float y);
 
-	virtual void m_update(std::map<Input::states, std::string>* keyspressed);
+	
+    void Update(std::map<Input::states, std::string>* keyspressed) override ;
 	
 	void setSprite(sf::Sprite newsprite);
 	void m_setshapeb2d();
@@ -134,5 +142,5 @@ public:
 	
 
 	Player(b2World* world);
-	void m_update(std::map<Input::states,std::string>* keyspressed);
+	void Update(std::map<Input::states,std::string>* keyspressed) override;
 };

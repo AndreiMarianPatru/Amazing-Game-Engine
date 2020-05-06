@@ -6,6 +6,7 @@ class Scene
 {
 	std::list<Object*> objects;
 
+	void printNoOfObjects();
 	
 
 	

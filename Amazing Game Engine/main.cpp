@@ -100,6 +100,10 @@ int main()
     resource_manager->loadSoundWithName("sound1", "assets/sound1.wav");
 	resource_manager->loadImageWithName("ground","assets/ground2.png");
 
+
+
+
+
 	
 
 		sf::Sprite sprite;
@@ -162,10 +166,30 @@ int main()
 	staticBody->CreateFixture(&myFixtureDef);
 	polygonShape.SetAsBox(1, 20, b2Vec2((screenWidth/SCALE)-1, 20), 0);//right wall
 	staticBody->CreateFixture(&myFixtureDef);
+
+
+
+	Object* root=new Object();
+	Object* ob1=new Object(1);
+	Object* ob2=new Object(2);
+	Object* ob3=new Object(3);
+	Object* ob4=new Object(4);
+	Object* ob5=new Object(5);
+	root->AddChild(ob1);
+	root->AddChild(ob2);
+	root->AddChild(ob3);
+	root->AddChild(ob4);
+	root->AddChild(ob5);
+	root->PrintChildren();
+	std::cout<<std::endl;
+	root->RemoveChild(2);
+	root->RemoveChild(20);
+	root->PrintChildren();
+	
 	
 	
     resource_manager->playsound("sound1");
-    std::cout<<world->GetBodyCount();
+  //  std::cout<<world->GetBodyCount();
 	while (window.isOpen())
     {
 
@@ -195,7 +219,7 @@ int main()
 
         for (auto entity : BaseEntity::Renderables)
         {
-        	entity->m_update(input->keyspressed);
+        	entity->Update(input->keyspressed);
             window.draw(entity->GetSprite(), entity->getTransform());
         	
         }
