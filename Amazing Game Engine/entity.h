@@ -32,6 +32,8 @@ public:
 	std::list<Object*> children;
 	Object* parent;
 	b2Transform transform;
+	sf::Sprite sprite;
+	sf::Texture texture;
 
 
 	Object(int id);
@@ -50,18 +52,16 @@ public:
 	virtual void UpdateChildren();
 
 	void PrintChildren();
+	void SetSprite(sf::Sprite sprite);
+	sf::Sprite GetSprite();
+	void SetTexture(sf::Texture texture);
+	sf::Texture GetTexture();
 };
 
 
 class BaseEntity : public Object
 {
 public:
-	/**
-	 * static std vector of BaseEntity pointers, currently used to loop all entities for rendering and ticking.
-	 */
-	static std::vector<BaseEntity*> Renderables;
-
-	sf::Vector2f velocity;
 
 
 	/**
@@ -78,32 +78,10 @@ public:
 	 */
 	virtual ~BaseEntity();
 
+	
 	virtual void Initialize();
 
-	/**
-	 * Think is the standard "update" function for all agents
-	 * All agents must implement their own Think function - there is nothing provided in the base class.
-	 */
-	virtual void Think();
 
-
-	/**
-	 * GetSprite provides access to the entities sprite object
-	 * @return sf::Sprite current entities sprite
-	 */
-	sf::Sprite GetSprite() { return sprite; }
-
-	/**
-	 * SetColour allows for post-construction alteration of the colour tint
-	 * @param colour a sf::Colour value
-	 */
-	void SetColour(sf::Color colour) { colourTint = colour; }
-
-	/**
-	* SetTextureFile is used to set the filename variable
-	* @param string a filename
-	*/
-	void SetTextureFile(std::string file) { filename = file; }
 
 	void m_setposition(float x, float y);
 
@@ -117,17 +95,6 @@ public:
 	b2World* world;
 	b2Body* body{};
 
-protected:
-	std::string filename;
-	sf::Sprite sprite;
-	sf::Texture texture;
-	sf::Color colourTint;
-
-
-protected:
-	/**
-	 * Initialize assures our texture is loaded using the assigned file name and initial colour tint
-	 */
 };
 
 class Player : public BaseEntity

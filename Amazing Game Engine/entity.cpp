@@ -1,7 +1,6 @@
 #include "entity.h"
 
 
-std::vector<BaseEntity*> BaseEntity::Renderables;
 
 Object::Object(int id)
 {
@@ -84,6 +83,26 @@ void Object::PrintChildren()
 	}
 }
 
+void Object::SetSprite(sf::Sprite sprite)
+{
+	this->sprite=sprite;
+}
+
+sf::Sprite Object::GetSprite()
+{
+	return this->sprite;
+}
+
+void Object::SetTexture(sf::Texture texture)
+{
+	this->texture=texture;
+}
+
+sf::Texture Object::GetTexture()
+{
+	return this->texture;
+}
+
 BaseEntity::BaseEntity(b2World* world)
 {
 	this->world = world;
@@ -94,9 +113,6 @@ BaseEntity::~BaseEntity()
 {
 }
 
-void BaseEntity::Think()
-{
-}
 
 void BaseEntity::m_setposition(float x, float y)
 {
@@ -133,7 +149,6 @@ void BaseEntity::m_setfrictionb2d(float value)
 
 void BaseEntity::Initialize()
 {
-	Renderables.push_back(this);
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
