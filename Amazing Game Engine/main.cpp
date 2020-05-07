@@ -92,8 +92,9 @@ int main()
 	//CHECK(b2Abs(position.x) < 0.01f);
 	//CHECK(b2Abs(position.y - 1.01f) < 0.01f);
 	//CHECK(b2Abs(angle) < 0.01f);
-
-	Scene* scene1= new Scene();
+	SceneManager scene_manager;
+	Scene* scene1= new Scene(1);
+	Scene* scene2= new Scene(2);
 
 	ResourceManager* resource_manager = new ResourceManager();
 	resource_manager->loadImageWithName("random", "assets/random.jpg");
@@ -107,7 +108,6 @@ int main()
 	ground->setPosition(0, 850);
 	ground->setScale(3.6f, 1.0f);
 	std::shared_ptr<Object> S1ground=ground;//create a copy for scene1
-	scene1->AddObjectToScene(&*S1ground);
 	
 	
 	
@@ -119,7 +119,7 @@ int main()
 	//player->m_setshapeb2d();
 	player->m_setfrictionb2d(2.0f);
 	std::shared_ptr<Player> S1player=player;//create a copy for scene1
-	scene1->AddObjectToScene(&*S1player);
+	
 
 	std::shared_ptr<BaseEntity> enemy1=std::make_shared<BaseEntity>(world);	
 	enemy1->setSprite(resource_manager->searchForImage("bob"));
@@ -130,29 +130,28 @@ int main()
 	std::shared_ptr<BaseEntity> S1enemy1=enemy1;//create a copy for scene1
 	
 
-	BaseEntity* enemy2 = new BaseEntity(world);
+	std::shared_ptr<BaseEntity> enemy2=std::make_shared<BaseEntity>(world);	
 	enemy2->setSprite(resource_manager->searchForImage("bob"));
 	enemy2->Initialize();
 	enemy2->m_setposition(20, 5);
 	//enemy1->m_setshapeb2d();
 	enemy2->m_setfrictionb2d(2.0f);
+	std::shared_ptr<BaseEntity> S1enemy2=enemy2;//create a copy for scene1
 
-	BaseEntity* enemy3 = new BaseEntity(world);
-	enemy3->setSprite(resource_manager->searchForImage("bob"));
-	enemy3->Initialize();
-	enemy3->m_setposition(20, 3);
-	//enemy3->m_setshapeb2d();
-	enemy3->m_setfrictionb2d(2.0f);
+	scene1->AddObjectToScene(S1ground);
+	scene1->AddObjectToScene(S1player);
+	scene1->AddObjectToScene(S1enemy1);
+	scene1->AddObjectToScene(S1enemy2);
+
+	scene_manager.AddScene(scene1);
+	//scene_manager.LoadScene(1);
+	scene2->AddObjectToScene(S1ground);
+	scene2->AddObjectToScene(S1player);
+	scene2->AddObjectToScene(S1enemy1);
+
+	scene_manager.AddScene(scene2);
+	scene_manager.LoadScene(2);
 	
-
-
-	/*BaseEntity* npc1= new BaseEntity(&world);
-	npc1->setSprite(resource_manager->searchForImage("flag"));
-	npc1->Initialize();
-	npc1->m_setposition(20,0);
-	npc1->m_setshapeb2d();*/
-	//npc1->m_setfrictionb2d(2.0f);
-
 	//a static body
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_staticBody;
@@ -206,6 +205,12 @@ int main()
 
 		window.clear();
 
+		if(input->Rpressed)
+		{
+			std::cout<<"r";
+	      scene_manager.LoadScene(1);
+			
+		}
 
 		//std::cout<<player->body->GetPosition().x<<" "<<player->body->GetPosition().y;
 
@@ -213,7 +218,7 @@ int main()
 
 	//	window.draw(ground->GetSprite());
 
-		for (auto entity : scene1->objects)
+		for (auto entity : SceneManager::activeObjects)
 		{
 			entity->Update(input->keyspressed);
 			window.draw(entity->GetSprite(), entity->getTransform());

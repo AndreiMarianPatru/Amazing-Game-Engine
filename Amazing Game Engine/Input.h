@@ -5,7 +5,7 @@
 class Input
 {
 public:
-	
+	bool Rpressed;
 	enum states
 	{
 		left,

@@ -5,16 +5,15 @@
 #include <iostream>
 #include <list>
 #include <vector>
-				//player->body->ApplyLinearImpulse(b2Vec2(-10, 0), player->body->GetWorldCenter(), true);
+//player->body->ApplyLinearImpulse(b2Vec2(-10, 0), player->body->GetWorldCenter(), true);
 
 Input::Input()
 {
-	keyspressed=new std::map<states,std::string>();
+	keyspressed = new std::map<states, std::string>();
 }
 
 void Input::CheckForInput(sf::Window& window)
 {
-
 	/*std::cout<<"keys pressed: "<<std::endl;
 	std::map<std::string,states>::iterator it;
 	for(it= keyspressed->begin();it!=keyspressed->end();++it)
@@ -23,7 +22,7 @@ void Input::CheckForInput(sf::Window& window)
 		
 	}
 	std::cout<<std::endl;*/
-	
+
 	sf::Event event{};
 	while (window.pollEvent(event))
 	{
@@ -34,52 +33,52 @@ void Input::CheckForInput(sf::Window& window)
 		{
 			if (event.type == sf::Event::EventType::KeyPressed)
 			{
-			
-			 keyspressed->insert(std::pair<states,std::string>(jump,"W"));
-			}				
-			else if(event.type == sf::Event::EventType::KeyReleased)
+				keyspressed->insert(std::pair<states, std::string>(jump, "W"));
+			}
+			else if (event.type == sf::Event::EventType::KeyReleased)
 			{
 				keyspressed->erase(jump);
-				
-			}			
+			}
 		}
-		
+
 		if (event.key.code == sf::Keyboard::A)
 		{
 			if (event.type == sf::Event::EventType::KeyPressed)
 			{
-				
-			 keyspressed->insert(std::pair<states,std::string>(left,"A"));
-			}				
-			else if(event.type == sf::Event::EventType::KeyReleased)
+				keyspressed->insert(std::pair<states, std::string>(left, "A"));
+			}
+			else if (event.type == sf::Event::EventType::KeyReleased)
 			{
 				keyspressed->erase(left);
-			
-			}			
+			}
 		}
-		
+
 		if (event.key.code == sf::Keyboard::D)
 		{
 			if (event.type == sf::Event::EventType::KeyPressed)
 			{
-			
-			 keyspressed->insert(std::pair<states,std::string>(right,"D"));
-			}				
-			else if(event.type == sf::Event::EventType::KeyReleased)
+				keyspressed->insert(std::pair<states, std::string>(right, "D"));
+			}
+			else if (event.type == sf::Event::EventType::KeyReleased)
 			{
 				keyspressed->erase(right);
-			
-			}			
+			}
 		}
-		
+
+		if (event.key.code == sf::Keyboard::R)
+		{
+			if (event.type == sf::Event::EventType::KeyPressed)
+			{
+				Rpressed = true;
+			}
+			else if (event.type == sf::Event::EventType::KeyReleased)
+			{
+				Rpressed = false;
+			}
+		}
 	}
-	
 }
 
 void Input::UseInput()
 {
-	
-    
-	
-	
 }
