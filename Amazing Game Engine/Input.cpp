@@ -14,15 +14,6 @@ Input::Input()
 
 void Input::CheckForInput(sf::Window& window)
 {
-	/*std::cout<<"keys pressed: "<<std::endl;
-	std::map<std::string,states>::iterator it;
-	for(it= keyspressed->begin();it!=keyspressed->end();++it)
-	{
-		std::cout<<it->first<<"  ";
-		
-	}
-	std::cout<<std::endl;*/
-
 	sf::Event event{};
 	while (window.pollEvent(event))
 	{
@@ -65,15 +56,19 @@ void Input::CheckForInput(sf::Window& window)
 			}
 		}
 
+		if (event.key.code == sf::Keyboard::T)
+		{
+			
+		     if (event.type == sf::Event::EventType::KeyReleased)
+			{
+				Tpressed=true;
+			}
+		}
 		if (event.key.code == sf::Keyboard::R)
 		{
-			if (event.type == sf::Event::EventType::KeyPressed)
+			if (event.type == sf::Event::EventType::KeyReleased)
 			{
-				Rpressed = true;
-			}
-			else if (event.type == sf::Event::EventType::KeyReleased)
-			{
-				Rpressed = false;
+				Rpressed=true;
 			}
 		}
 	}

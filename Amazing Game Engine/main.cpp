@@ -17,14 +17,17 @@ float screenHeight = 1000;
 
 ResourceManager resource_manager;
 
-void inline setScene1(Player& player,BaseEntity& enemy1, BaseEntity& enemy2)
+void inline setScene1(Player& player, BaseEntity& enemy1, BaseEntity& enemy2)
 {
-	
-	player.m_setposition(10, 10);
-	enemy1.m_setposition(20, 15);
-	enemy2.m_setposition(20, 5);
-	
+	player.m_setposition(10, 24);
+	enemy1.m_setposition(20, 24);
+	enemy2.m_setposition(25, 24);
+}
 
+void inline setScene2(Player& player, BaseEntity& enemy1, BaseEntity& enemy2)
+{
+	player.m_setposition(3, 24);
+	enemy1.m_setposition(10, 24);
 }
 
 
@@ -105,8 +108,8 @@ int main()
 	//CHECK(b2Abs(position.y - 1.01f) < 0.01f);
 	//CHECK(b2Abs(angle) < 0.01f);
 	SceneManager scene_manager;
-	Scene scene1=Scene(1);
-	Scene scene2=Scene(2);
+	Scene scene1 = Scene(1);
+	Scene scene2 = Scene(2);
 
 	ResourceManager resource_manager;
 	resource_manager.loadImageWithName("random", "assets/random.jpg");
@@ -117,39 +120,36 @@ int main()
 
 	Object ground;
 	ground.SetSprite(resource_manager.searchForImage("ground"));
-	ground.setPosition(0, 850);
-	ground.setScale(3.6f, 1.0f);
-	std::shared_ptr<Object> S1ground(&ground);//create a copy for scene1
-	
+	ground.setPosition(0, 770);
+	ground.setScale(3.6f, 1.5f);
+	std::shared_ptr<Object> S1ground(&ground); //create a copy for scene1
 
-	
+
 	Player player(world);
 	player.setSprite(resource_manager.searchForImage("bob"));
 	player.Initialize();
-	player.m_setposition(10, 10);
+
 	//player->m_setshapeb2d();
 	player.m_setfrictionb2d(2.0f);
-	std::shared_ptr<Player> S1player(&player);//create a copy for scene1
-	
+	std::shared_ptr<Player> S1player(&player); //create a copy for scene1
 
-	
+
 	BaseEntity enemy1(world);
 	enemy1.setSprite(resource_manager.searchForImage("bob"));
 	enemy1.Initialize();
-	enemy1.m_setposition(20, 10);
+
 	//enemy1->m_setshapeb2d();
 	enemy1.m_setfrictionb2d(2.0f);
-	std::shared_ptr<BaseEntity> S1enemy1(&enemy1);//create a copy for scene1
-	
+	std::shared_ptr<BaseEntity> S1enemy1(&enemy1); //create a copy for scene1
 
 
 	BaseEntity enemy2(world);
 	enemy2.setSprite(resource_manager.searchForImage("bob"));
 	enemy2.Initialize();
-	enemy2.m_setposition(20, 5);
+
 	//enemy1->m_setshapeb2d();
 	enemy2.m_setfrictionb2d(2.0f);
-	std::shared_ptr<BaseEntity> S1enemy2(&enemy2);//create a copy for scene1
+	std::shared_ptr<BaseEntity> S1enemy2(&enemy2); //create a copy for scene1
 
 	scene1.AddObjectToScene(S1ground);
 	scene1.AddObjectToScene(S1player);
@@ -164,7 +164,8 @@ int main()
 
 	scene_manager.AddScene(&scene2);
 	scene_manager.LoadScene(1);
-	
+	setScene1(player, enemy1, enemy2);
+
 	//a static body
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_staticBody;
@@ -203,7 +204,6 @@ int main()
 	root->PrintChildren();
 
 
-	resource_manager.playsound("sound1");
 	//  std::cout<<world->GetBodyCount();
 	while (window.isOpen())
 	{
@@ -218,19 +218,23 @@ int main()
 
 		window.clear();
 
-		if(input->Rpressed)
+		if (input->Rpressed)
 		{
-			std::cout<<"r";
-	      scene_manager.LoadScene(1);
-			setScene1(player,enemy1,enemy2);
-			
+			std::cout << "R";
+			scene_manager.LoadScene(1);
+			setScene1(player, enemy1, enemy2);
+			resource_manager.playsound("sound1");
+			input->Rpressed = false;
+		}
+		if (input->Tpressed)
+		{
+			std::cout << "T";
+			scene_manager.LoadScene(2);
+			setScene2(player, enemy1, enemy2);
+			resource_manager.playsound("sound1");
+			input->Tpressed = false;
 		}
 
-		//std::cout<<player->body->GetPosition().x<<" "<<player->body->GetPosition().y;
-
-		//player->setRotation(player->getRotation()+1);
-
-	//	window.draw(ground->GetSprite());
 
 		for (auto entity : SceneManager::activeObjects)
 		{
