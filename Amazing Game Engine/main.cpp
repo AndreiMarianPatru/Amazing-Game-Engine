@@ -19,15 +19,16 @@ ResourceManager resource_manager;
 
 void inline setScene1(Player& player, BaseEntity& enemy1, BaseEntity& enemy2)
 {
-	player.m_setposition(10, 24);
-	enemy1.m_setposition(20, 24);
-	enemy2.m_setposition(25, 24);
+	player.m_setpositionb2d(10, 24);
+	enemy1.m_setpositionb2d(20, 24);
+	enemy2.m_setpositionb2d(25, 24);
 }
 
 void inline setScene2(Player& player, BaseEntity& enemy1, BaseEntity& enemy2)
 {
-	player.m_setposition(3, 24);
-	enemy1.m_setposition(10, 24);
+	player.m_setpositionb2d(3, 24);
+	enemy1.m_setpositionb2d(10, 24);
+	
 }
 
 
@@ -41,6 +42,8 @@ int main()
 	b2Vec2 gravity(0.0f, 10.0f);
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
+	/*When the world destructor is called, all bodies and joints are freed. This can
+	create orphaned pointers.*/
 	b2World* world = new b2World(gravity);
 
 	// Define the ground body.
@@ -62,31 +65,6 @@ int main()
 	// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
 
-
-	//// Define the dynamic body. We set its position and call the body factory.
-	//b2BodyDef bodyDef;
-	//bodyDef.type = b2_dynamicBody;
-	//bodyDef.position.Set(0.0f, 4.0f);
-	//b2Body* body = world.CreateBody(&bodyDef);
-
-	//// Define another box shape for our dynamic body.
-	//b2PolygonShape dynamicBox;
-	//dynamicBox.SetAsBox(1.0f, 1.0f);
-	//
-
-	//// Define the dynamic body fixture.
-	//b2FixtureDef fixtureDef;
-	//fixtureDef.shape = &dynamicBox;
-
-	//// Set the box density to be non-zero, so it will be dynamic.
-	//fixtureDef.density = 1.0f;
-
-	//// Override the default friction.
-	//fixtureDef.friction = 0.3f;
-
-	//// Add the shape to the body.
-	//body->CreateFixture(&fixtureDef);
-
 	// Prepare for simulation. Typically we use a time step of 1/60 of a
 	// second (60Hz) and 10 iterations. This provides a high quality simulation
 	// in most game scenarios.
@@ -95,18 +73,8 @@ int main()
 	int32 positionIterations = 2;
 
 
-	// This is our little game loop.
-	//for (int32 i = 0; i < 600; ++i)
-	//{
-	//	
-	//}
+	
 
-	/*When the world destructor is called, all bodies and joints are freed. This can
-	create orphaned pointers, so be careful about your world management.*/
-
-	//CHECK(b2Abs(position.x) < 0.01f);
-	//CHECK(b2Abs(position.y - 1.01f) < 0.01f);
-	//CHECK(b2Abs(angle) < 0.01f);
 	SceneManager scene_manager;
 	Scene scene1 = Scene(1);
 	Scene scene2 = Scene(2);
@@ -122,51 +90,52 @@ int main()
 	ground.SetSprite(resource_manager.searchForImage("ground"));
 	ground.setPosition(0, 770);
 	ground.setScale(3.6f, 1.5f);
-	std::shared_ptr<Object> S1ground(&ground); //create a copy for scene1
+	std::shared_ptr<Object> copyground(&ground); 
 
 
 	Player player(world);
 	player.setSprite(resource_manager.searchForImage("bob"));
 	player.Initialize();
 
-	//player->m_setshapeb2d();
+	
 	player.m_setfrictionb2d(2.0f);
-	std::shared_ptr<Player> S1player(&player); //create a copy for scene1
+	std::shared_ptr<Player> copyplayer(&player); 
 
 
 	BaseEntity enemy1(world);
 	enemy1.setSprite(resource_manager.searchForImage("bob"));
 	enemy1.Initialize();
 
-	//enemy1->m_setshapeb2d();
+	
 	enemy1.m_setfrictionb2d(2.0f);
-	std::shared_ptr<BaseEntity> S1enemy1(&enemy1); //create a copy for scene1
+	std::shared_ptr<BaseEntity> copyenemy1(&enemy1); 
 
 
 	BaseEntity enemy2(world);
 	enemy2.setSprite(resource_manager.searchForImage("bob"));
 	enemy2.Initialize();
 
-	//enemy1->m_setshapeb2d();
-	enemy2.m_setfrictionb2d(2.0f);
-	std::shared_ptr<BaseEntity> S1enemy2(&enemy2); //create a copy for scene1
 
-	scene1.AddObjectToScene(S1ground);
-	scene1.AddObjectToScene(S1player);
-	scene1.AddObjectToScene(S1enemy1);
-	scene1.AddObjectToScene(S1enemy2);
+	enemy2.m_setfrictionb2d(2.0f);
+	std::shared_ptr<BaseEntity> copyenemy2(&enemy2); 
+
+	scene1.AddObjectToScene(copyground);
+	scene1.AddObjectToScene(copyplayer);
+	scene1.AddObjectToScene(copyenemy1);
+	scene1.AddObjectToScene(copyenemy2);
+
+
+	scene2.AddObjectToScene(copyground);
+	scene2.AddObjectToScene(copyplayer);
+	scene2.AddObjectToScene(copyenemy1);
 
 	scene_manager.AddScene(&scene1);
-	//scene_manager.LoadScene(1);
-	scene2.AddObjectToScene(S1ground);
-	scene2.AddObjectToScene(S1player);
-	scene2.AddObjectToScene(S1enemy1);
-
 	scene_manager.AddScene(&scene2);
+
 	scene_manager.LoadScene(1);
 	setScene1(player, enemy1, enemy2);
 
-	//a static body
+	//create invisible walls
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_staticBody;
 	myBodyDef.position.Set(0, 0);
@@ -204,7 +173,6 @@ int main()
 	root->PrintChildren();
 
 
-	//  std::cout<<world->GetBodyCount();
 	while (window.isOpen())
 	{
 		input->CheckForInput(window);

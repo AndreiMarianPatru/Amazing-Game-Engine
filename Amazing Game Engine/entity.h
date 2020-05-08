@@ -34,6 +34,8 @@ public:
 	b2Transform transform;
 	sf::Sprite sprite;
 	sf::Texture texture;
+	b2World* world;
+	b2Body* body;
 
 
 	Object(int id);
@@ -49,8 +51,11 @@ public:
 	void RemoveChild(int id);
 
 	virtual void Update(std::map<Input::states, std::string>* keyspressed);
-	virtual void UpdateChildren();
+	virtual void UpdateChildren(b2Body* body);
 
+
+	void m_setpositionb2d(float x, float y);
+	
 	void PrintChildren();
 	void SetSprite(sf::Sprite sprite);
 	sf::Sprite GetSprite();
@@ -83,17 +88,16 @@ public:
 
 
 
-	void m_setposition(float x, float y);
 
 
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
+	void UpdateChildren(b2Body* body) override;
 
 	void setSprite(sf::Sprite newsprite);
 	void m_setshapeb2d();
 	void m_setfrictionb2d(float value);
 public:
-	b2World* world;
-	b2Body* body{};
+	
 
 };
 

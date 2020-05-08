@@ -7,6 +7,8 @@ Object::Object(int id)
 	this->id = id;
 }
 
+
+
 Object::Object()
 {
 }
@@ -68,9 +70,12 @@ void Object::Update(std::map<Input::states, std::string>* keyspressed)
 {
 }
 
-void Object::UpdateChildren()
+void Object::UpdateChildren(b2Body* body)
 {
+	
 }
+
+
 
 void Object::PrintChildren()
 {
@@ -114,7 +119,7 @@ BaseEntity::~BaseEntity()
 }
 
 
-void BaseEntity::m_setposition(float x, float y)
+void Object::m_setpositionb2d(float x, float y)//set position using b2d coords
 {
 	this->body->SetTransform(b2Vec2(x, y), 0);
 	this->setPosition(x * SCALE, y * SCALE);
@@ -125,6 +130,18 @@ void BaseEntity::Update(std::map<Input::states, std::string>* keyspressed)
 	this->setPosition(this->body->GetPosition().x * SCALE, this->body->GetPosition().y * SCALE);
 	this->setRotation(this->body->GetAngle());
 	this->sprite.setRotation(this->getRotation());
+}
+
+void BaseEntity::UpdateChildren(b2Body* body)
+{
+	for(auto child: this->children)
+	{
+		child->m_setpositionb2d(this->body->GetPosition().x+child->body->GetPosition().x
+							   ,this->body->GetPosition().y+child->body->GetPosition().y);
+		child->body->SetTransform(child->body->GetPosition(),this->body->GetAngle()+child->body->GetAngle());
+		
+	}
+	
 }
 
 void BaseEntity::setSprite(sf::Sprite newsprite)
