@@ -5,6 +5,10 @@ ResourceManager::ResourceManager()
 {
 }
 
+ResourceManager::~ResourceManager()
+{
+}
+
 void ResourceManager::loadImageWithName(std::string name,std::string location)
 {
     sf::Texture* texture=new sf::Texture;
