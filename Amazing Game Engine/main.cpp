@@ -207,6 +207,7 @@ int main()
 		for (auto entity : SceneManager::activeObjects)
 		{
 			entity->Update(input->keyspressed);
+			entity->UpdateChildren();
 			window.draw(entity->GetSprite(), entity->getTransform());
 		}
 		window.display();

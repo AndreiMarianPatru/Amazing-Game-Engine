@@ -70,7 +70,7 @@ void Object::Update(std::map<Input::states, std::string>* keyspressed)
 {
 }
 
-void Object::UpdateChildren(b2Body* body)
+void Object::UpdateChildren()
 {
 	
 }
@@ -132,7 +132,7 @@ void BaseEntity::Update(std::map<Input::states, std::string>* keyspressed)
 	this->sprite.setRotation(this->getRotation());
 }
 
-void BaseEntity::UpdateChildren(b2Body* body)
+void BaseEntity::UpdateChildren()
 {
 	for(auto child: this->children)
 	{

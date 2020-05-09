@@ -51,7 +51,7 @@ public:
 	void RemoveChild(int id);
 
 	virtual void Update(std::map<Input::states, std::string>* keyspressed);
-	virtual void UpdateChildren(b2Body* body);
+	virtual void UpdateChildren();
 
 
 	void m_setpositionb2d(float x, float y);
@@ -91,7 +91,7 @@ public:
 
 
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
-	void UpdateChildren(b2Body* body) override;
+	void UpdateChildren() override;
 
 	void setSprite(sf::Sprite newsprite);
 	void m_setshapeb2d();
