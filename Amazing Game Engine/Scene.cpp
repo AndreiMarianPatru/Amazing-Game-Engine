@@ -1,7 +1,7 @@
 #include "Scene.h"
 
 
-std::list<std::shared_ptr<Object>> SceneManager::activeObjects;
+
 
 
 

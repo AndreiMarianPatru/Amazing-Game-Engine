@@ -220,7 +220,7 @@ Collectable::Collectable(int id, b2World* world)
 
 Collectable::~Collectable()
 {
-	body->GetWorld()->DestroyBody( body );
+
 }
 
 
@@ -253,9 +253,5 @@ void Collectable::Update(std::map<Input::states, std::string>* keyspressed)
 	}
 	}
 	
-	if(this->readyToBeDeleted==true)
-	{
-		
-		this->world->DestroyBody(this->body);
-	}
+
 }

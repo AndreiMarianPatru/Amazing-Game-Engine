@@ -202,12 +202,25 @@ int main()
 		}
 
 
-		for (auto entity : SceneManager::activeObjects)
+		for (auto entity : scene_manager.activeObjects)
 		{
 			entity->Update(input->keyspressed);
 			entity->UpdateChildren();
 			window.draw(entity->GetSprite(), entity->getTransform());
+			
+			
+			
 		}
+		for(auto entity :scene_manager.activeObjects)
+		{
+			if(entity->readyToBeDeleted)
+			{
+				entity->world->DestroyBody(entity->body);
+				scene_manager.activeObjects.remove(entity);
+			break;
+			}
+		}
+		//scene_manager.activeObjects.clear();
 		window.display();
 	}
 

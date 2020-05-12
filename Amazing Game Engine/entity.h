@@ -36,6 +36,7 @@ public:
 	sf::Texture texture;
 	b2World* world;
 	b2Body* body;
+	bool readyToBeDeleted;
 
 
 	Object(int id);
@@ -117,6 +118,5 @@ public:
 	~Collectable();
 	void Initialize();
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
-private:
-	bool readyToBeDeleted;
+
 }; 
