@@ -1,12 +1,16 @@
 #include "entity.h"
 
 
-
 Object::Object(int id)
 {
 	this->id = id;
 }
 
+Object::Object(int id, b2World* world)
+{
+	this->id = id;
+	this->world = world;
+}
 
 
 Object::Object()
@@ -45,6 +49,7 @@ b2Transform Object::GetTransform()
 void Object::AddChild(Object* object)
 {
 	this->children.push_back(object);
+	object->SetParent(this);
 }
 
 void Object::RemoveChild(int m_id)
@@ -72,9 +77,7 @@ void Object::Update(std::map<Input::states, std::string>* keyspressed)
 
 void Object::UpdateChildren()
 {
-	
 }
-
 
 
 void Object::PrintChildren()
@@ -90,7 +93,7 @@ void Object::PrintChildren()
 
 void Object::SetSprite(sf::Sprite sprite)
 {
-	this->sprite=sprite;
+	this->sprite = sprite;
 }
 
 sf::Sprite Object::GetSprite()
@@ -100,7 +103,7 @@ sf::Sprite Object::GetSprite()
 
 void Object::SetTexture(sf::Texture texture)
 {
-	this->texture=texture;
+	this->texture = texture;
 }
 
 sf::Texture Object::GetTexture()
@@ -119,7 +122,7 @@ BaseEntity::~BaseEntity()
 }
 
 
-void Object::m_setpositionb2d(float x, float y)//set position using b2d coords
+void Object::m_setpositionb2d(float x, float y) //set position using b2d coords
 {
 	this->body->SetTransform(b2Vec2(x, y), 0);
 	this->setPosition(x * SCALE, y * SCALE);
@@ -134,14 +137,12 @@ void BaseEntity::Update(std::map<Input::states, std::string>* keyspressed)
 
 void BaseEntity::UpdateChildren()
 {
-	for(auto child: this->children)
+	for (auto child : this->children)
 	{
-		child->m_setpositionb2d(this->body->GetPosition().x+child->body->GetPosition().x
-							   ,this->body->GetPosition().y+child->body->GetPosition().y);
-		child->body->SetTransform(child->body->GetPosition(),this->body->GetAngle()+child->body->GetAngle());
-		
+		child->m_setpositionb2d(this->body->GetPosition().x + child->body->GetPosition().x
+		                        , this->body->GetPosition().y + child->body->GetPosition().y);
+		child->body->SetTransform(child->body->GetPosition(), this->body->GetAngle() + child->body->GetAngle());
 	}
-	
 }
 
 void BaseEntity::setSprite(sf::Sprite newsprite)
@@ -166,7 +167,6 @@ void BaseEntity::m_setfrictionb2d(float value)
 
 void BaseEntity::Initialize()
 {
-
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0.0f, 4.0f);
@@ -187,6 +187,7 @@ Player::Player(b2World* world): BaseEntity(world)
 
 void Player::Update(std::map<Input::states, std::string>* keyspressed)
 {
+	//std::cout<<"x "<<this->body->GetPosition().x<<" y "<<this->body->GetPosition().y<<std::endl;
 	b2Vec2 vel = body->GetLinearVelocity();
 	float desiredVel = 0;
 	std::map<std::string, Input::states>::iterator it;
@@ -208,4 +209,53 @@ void Player::Update(std::map<Input::states, std::string>* keyspressed)
 	this->setPosition(this->body->GetPosition().x * SCALE, this->body->GetPosition().y * SCALE);
 	// this->setRotation(this->body->GetAngle());
 	//this->sprite.setRotation(this->getRotation());	
+}
+
+Collectable::Collectable(int id, b2World* world)
+{
+	this->id = id;
+	this->world = world;
+	this->readyToBeDeleted = false;
+}
+
+Collectable::~Collectable()
+{
+	body->GetWorld()->DestroyBody( body );
+}
+
+
+void Collectable::Initialize()
+{
+	b2BodyDef myBodyDef;
+	myBodyDef.type = b2_staticBody;
+	myBodyDef.position.Set(27, 19);
+	this->body = world->CreateBody(&myBodyDef);
+	b2PolygonShape staticBox;
+	staticBox.SetAsBox(1, 1);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &staticBox;
+	fixtureDef.density = 0.0f;
+	fixtureDef.isSensor = true;
+	body->CreateFixture(&fixtureDef);
+}
+
+void Collectable::Update(std::map<Input::states, std::string>* keyspressed)
+{
+	if(this->readyToBeDeleted!=true)
+	{
+		for (b2ContactEdge* ce = this->body->GetContactList(); ce; ce = ce->next)
+	{
+		b2Contact* c = ce->contact;
+		if (c->IsTouching())
+		{
+			this->readyToBeDeleted = true;
+		}
+	}
+	}
+	
+	if(this->readyToBeDeleted==true)
+	{
+		
+		this->world->DestroyBody(this->body);
+	}
 }

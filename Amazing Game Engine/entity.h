@@ -39,6 +39,7 @@ public:
 
 
 	Object(int id);
+	Object(int id,b2World* world);
 	Object();
 	~Object();
 
@@ -109,3 +110,13 @@ public:
 	Player(b2World* world);
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
 };
+class Collectable: public Object
+{
+public:
+	Collectable(int id,b2World* world);
+	~Collectable();
+	void Initialize();
+	void Update(std::map<Input::states, std::string>* keyspressed) override;
+private:
+	bool readyToBeDeleted;
+}; 

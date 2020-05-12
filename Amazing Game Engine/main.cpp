@@ -85,13 +85,22 @@ int main()
 	resource_manager.loadImageWithName("bob", "assets/bob.png");
 	resource_manager.loadSoundWithName("sound1", "assets/sound1.wav");
 	resource_manager.loadImageWithName("ground", "assets/ground2.png");
+	resource_manager.loadImageWithName("coin", "assets/coin.png");
 
+
+	
 	Object ground;
 	ground.SetSprite(resource_manager.searchForImage("ground"));
 	ground.setPosition(0, 770);
 	ground.setScale(3.6f, 1.5f);
 	std::shared_ptr<Object> copyground(&ground); 
 
+	Collectable coin (1,world);
+	coin.SetSprite(resource_manager.searchForImage("coin"));
+	coin.setPosition(800,600);
+	coin.setScale(0.2,0.2);
+	coin.Initialize();
+	std::shared_ptr<Object> copycoin(&coin);
 
 	Player player(world);
 	player.setSprite(resource_manager.searchForImage("bob"));
@@ -105,6 +114,8 @@ int main()
 	BaseEntity enemy1(world);
 	enemy1.setSprite(resource_manager.searchForImage("bob"));
 	enemy1.Initialize();
+	enemy1.name="enemy1";
+	
 
 	
 	enemy1.m_setfrictionb2d(2.0f);
@@ -114,6 +125,7 @@ int main()
 	BaseEntity enemy2(world);
 	enemy2.setSprite(resource_manager.searchForImage("bob"));
 	enemy2.Initialize();
+	enemy2.name="enemy2";
 
 
 	enemy2.m_setfrictionb2d(2.0f);
@@ -123,6 +135,7 @@ int main()
 	scene1.AddObjectToScene(copyplayer);
 	scene1.AddObjectToScene(copyenemy1);
 	scene1.AddObjectToScene(copyenemy2);
+	scene1.AddObjectToScene(copycoin);
 
 
 	scene2.AddObjectToScene(copyground);
@@ -155,22 +168,7 @@ int main()
 	staticBody->CreateFixture(&myFixtureDef);
 
 
-	Object* root = new Object();
-	Object* ob1 = new Object(1);
-	Object* ob2 = new Object(2);
-	Object* ob3 = new Object(3);
-	Object* ob4 = new Object(4);
-	Object* ob5 = new Object(5);
-	root->AddChild(ob1);
-	root->AddChild(ob2);
-	root->AddChild(ob3);
-	root->AddChild(ob4);
-	root->AddChild(ob5);
-	root->PrintChildren();
-	std::cout << std::endl;
-	root->RemoveChild(2);
-	root->RemoveChild(20);
-	root->PrintChildren();
+     enemy1.AddChild(&enemy2);
 
 
 	while (window.isOpen())
