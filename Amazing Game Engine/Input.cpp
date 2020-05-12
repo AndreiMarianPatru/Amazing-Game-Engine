@@ -58,17 +58,16 @@ void Input::CheckForInput(sf::Window& window)
 
 		if (event.key.code == sf::Keyboard::T)
 		{
-			
-		     if (event.type == sf::Event::EventType::KeyReleased)
+			if (event.type == sf::Event::EventType::KeyReleased)
 			{
-				Tpressed=true;
+				Tpressed = true;
 			}
 		}
 		if (event.key.code == sf::Keyboard::R)
 		{
 			if (event.type == sf::Event::EventType::KeyReleased)
 			{
-				Rpressed=true;
+				Rpressed = true;
 			}
 		}
 	}

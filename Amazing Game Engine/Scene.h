@@ -21,9 +21,9 @@ public:
 class SceneManager
 {
 public:
-	
+
 	std::list<Scene*> scenes;
-    std::list<std::shared_ptr<Object>> activeObjects;
+	std::list<std::shared_ptr<Object>> activeObjects;
 
 	SceneManager();
 	void AddScene(Scene* scene);

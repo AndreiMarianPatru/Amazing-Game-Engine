@@ -26,7 +26,7 @@ class Object : public sf::Transformable
 {
 public:
 
-	int id{};
+	int id;
 	std::string name;
 	int ZOrder{};
 	std::list<Object*> children;
@@ -40,7 +40,8 @@ public:
 
 
 	Object(int id);
-	Object(int id,b2World* world);
+	Object(int id, b2World* world);
+	Object(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);
 	Object();
 	~Object();
 
@@ -57,7 +58,7 @@ public:
 
 
 	void m_setpositionb2d(float x, float y);
-	
+
 	void PrintChildren();
 	void SetSprite(sf::Sprite sprite);
 	sf::Sprite GetSprite();
@@ -79,17 +80,14 @@ public:
 	 * Constructor that accepts a texture file name
 	 * @param file a string filename
 	 */
-
+	BaseEntity(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);
 	/**
 	 * Deconstructor
 	 */
 	virtual ~BaseEntity();
 
-	
+
 	virtual void Initialize();
-
-
-
 
 
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
@@ -99,24 +97,23 @@ public:
 	void m_setshapeb2d();
 	void m_setfrictionb2d(float value);
 public:
-	
-
 };
 
 class Player : public BaseEntity
 {
 public:
 
-
 	Player(b2World* world);
+	Player(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
 };
-class Collectable: public Object
+
+class Collectable : public Object
 {
 public:
-	Collectable(int id,b2World* world);
+	Collectable(int id, b2World* world);
+	Collectable(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);
 	~Collectable();
 	void Initialize();
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
-
-}; 
+};

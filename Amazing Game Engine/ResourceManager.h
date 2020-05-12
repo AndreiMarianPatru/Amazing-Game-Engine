@@ -2,7 +2,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <map> 
+#include <map>
 
 class ResourceManager
 {
@@ -18,6 +18,4 @@ public:
 	void loadSoundWithName(std::string name, std::string location);
 	sf::Sprite searchForImage(std::string name);
 	void playsound(std::string name);
-	
 };
-

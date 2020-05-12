@@ -21,7 +21,7 @@ void inline setScene1(Player& player, BaseEntity& enemy1)
 {
 	player.m_setpositionb2d(10, 24);
 	enemy1.m_setpositionb2d(20, 24);
-//	enemy2.m_setpositionb2d(25, 24);
+	//	enemy2.m_setpositionb2d(25, 24);
 }
 
 void inline setScene2(Player& player, BaseEntity& enemy1, BaseEntity& enemy2)
@@ -82,34 +82,30 @@ int main()
 	resource_manager.loadImageWithName("bob", "assets/bob.png");
 	resource_manager.loadSoundWithName("sound1", "assets/sound1.wav");
 	resource_manager.loadImageWithName("ground", "assets/ground2.png");
+	resource_manager.loadImageWithName("enemy","assets/enemy.png");
 	resource_manager.loadImageWithName("coin", "assets/coin.png");
 
 
-	Object ground;
-	ground.SetSprite(resource_manager.searchForImage("ground"));
+	Object ground(0,"ground",0,resource_manager.searchForImage("ground"),world);
 	ground.setPosition(0, 770);
 	ground.setScale(3.6f, 1.5f);
 	std::shared_ptr<Object> copyground(&ground);
 
-	Collectable coin(1, world);
-	coin.SetSprite(resource_manager.searchForImage("coin"));
+	Collectable coin(1,"coin",3,resource_manager.searchForImage("coin"),world);
 	coin.setPosition(800, 600);
 	coin.setScale(0.2, 0.2);
 	coin.Initialize();
 	std::shared_ptr<Object> copycoin(&coin);
 
-	Player player(world);
-	player.setSprite(resource_manager.searchForImage("bob"));
+	Player player(2,"player",2,resource_manager.searchForImage("bob"),world);
 	player.Initialize();
-
-
 	player.m_setfrictionb2d(2.0f);
 	std::shared_ptr<Player> copyplayer(&player);
 
 
-	BaseEntity enemy1(world);
-	enemy1.setSprite(resource_manager.searchForImage("bob"));
+	BaseEntity enemy1(3,"enemy",2,resource_manager.searchForImage("bob"),world);
 	enemy1.Initialize();
+	//enemy1.setScale(0.1f,0.1f);
 	enemy1.name = "enemy1";
 
 

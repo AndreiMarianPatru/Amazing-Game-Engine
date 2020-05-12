@@ -12,6 +12,15 @@ Object::Object(int id, b2World* world)
 	this->world = world;
 }
 
+Object::Object(int id, std::string name, int ZOrder, sf::Sprite sprite, b2World* world)
+{
+	this->id=id;
+	this->name=name;
+	this->ZOrder=ZOrder;
+	this->sprite=sprite;
+	this->world=world;
+}
+
 
 Object::Object()
 {
@@ -116,6 +125,16 @@ BaseEntity::BaseEntity(b2World* world)
 	this->world = world;
 }
 
+BaseEntity::BaseEntity(int id, std::string name, int ZOrder, sf::Sprite sprite, b2World* world)
+{
+	this->id=id;
+	this->name=name;
+	this->ZOrder=ZOrder;
+	this->sprite=sprite;
+	this->world=world;
+
+}
+
 
 BaseEntity::~BaseEntity()
 {
@@ -130,31 +149,28 @@ void Object::m_setpositionb2d(float x, float y) //set position using b2d coords
 
 void BaseEntity::Update(std::map<Input::states, std::string>* keyspressed)
 {
-	std::cout<<"flag1 "<<flag<<std::endl;
-	
+	std::cout << "flag1 " << flag << std::endl;
+
 	switch (flag)
 	{
 	case true:
-		std::cout<<"1false "<<std::endl;
+		std::cout << "1false " << std::endl;
 		body->ApplyLinearImpulse(b2Vec2(-5, 0), body->GetWorldCenter(), true);
 		break;
 	case false:
-		std::cout<<"2true "<<std::endl;
+		std::cout << "2true " << std::endl;
 		body->ApplyLinearImpulse(b2Vec2(5, 0), body->GetWorldCenter(), true);
 		break;
-		
-		
 	}
-	if(this->body->GetPosition().x>30&&this->body->GetPosition().x<31)
+	if (this->body->GetPosition().x > 30 && this->body->GetPosition().x < 31)
 	{
-		flag=true;
-		
-	}if(this->body->GetPosition().x>0&&this->body->GetPosition().x<1)
-	{
-		flag=false;
-	
+		flag = true;
 	}
-	std::cout<<this->body->GetPosition().x<<std::endl;
+	if (this->body->GetPosition().x > 0 && this->body->GetPosition().x < 1)
+	{
+		flag = false;
+	}
+	std::cout << this->body->GetPosition().x << std::endl;
 	this->setPosition(this->body->GetPosition().x * SCALE, this->body->GetPosition().y * SCALE);
 	this->setRotation(this->body->GetAngle());
 	this->sprite.setRotation(this->getRotation());
@@ -192,7 +208,7 @@ void BaseEntity::m_setfrictionb2d(float value)
 
 void BaseEntity::Initialize()
 {
-	flag=false;
+	flag = false;
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0.0f, 4.0f);
@@ -209,6 +225,16 @@ void BaseEntity::Initialize()
 
 Player::Player(b2World* world): BaseEntity(world)
 {
+	this->world = world;
+}
+
+Player::Player(int id, std::string name, int ZOrder, sf::Sprite sprite, b2World* world): BaseEntity(id,name,ZOrder,sprite,world)
+{
+	this->id = id;
+	this->name = name;
+	this->ZOrder = ZOrder;
+	this->sprite = sprite;
+	this->world = world;
 }
 
 void Player::Update(std::map<Input::states, std::string>* keyspressed)
@@ -242,6 +268,15 @@ Collectable::Collectable(int id, b2World* world)
 	this->id = id;
 	this->world = world;
 	this->readyToBeDeleted = false;
+}
+
+Collectable::Collectable(int id, std::string name, int ZOrder, sf::Sprite sprite, b2World* world)
+{
+	this->id=id;
+	this->name=name;
+	this->ZOrder=ZOrder;
+	this->sprite=sprite;
+	this->world=world;
 }
 
 Collectable::~Collectable()

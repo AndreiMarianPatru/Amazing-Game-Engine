@@ -1,11 +1,7 @@
 #include "Scene.h"
 
 
-
-
-
-
-Scene::Scene(int index):index(index)
+Scene::Scene(int index): index(index)
 {
 	this->active = false;
 }
@@ -22,7 +18,6 @@ void Scene::AddObjectToScene(std::shared_ptr<Object> object)
 
 SceneManager::SceneManager()
 {
-	
 }
 
 void SceneManager::AddScene(Scene* scene)
@@ -41,12 +36,11 @@ void SceneManager::LoadScene(int index)
 
 			this->activeObjects.clear();
 			//populate the active objects list
-			for (it1 =(*it)->objects.begin(); it1 != (*it)->objects.end();++it1)
+			for (it1 = (*it)->objects.begin(); it1 != (*it)->objects.end(); ++it1)
 			{
-				std::shared_ptr<Object> copy=(*it1);
+				std::shared_ptr<Object> copy = (*it1);
 				activeObjects.push_back(copy);
 			}
-			
 		}
 		else
 		{
