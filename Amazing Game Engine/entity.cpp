@@ -75,7 +75,7 @@ void Object::Update(std::map<Input::states, std::string>* keyspressed)
 {
 }
 
-void Object::UpdateChildren()
+void Object::UpdateChildren(std::map<Input::states, std::string>* keyspressed)
 {
 }
 
@@ -130,19 +130,44 @@ void Object::m_setpositionb2d(float x, float y) //set position using b2d coords
 
 void BaseEntity::Update(std::map<Input::states, std::string>* keyspressed)
 {
+	std::cout<<"flag1 "<<flag<<std::endl;
+	
+	switch (flag)
+	{
+	case true:
+		std::cout<<"1false "<<std::endl;
+		body->ApplyLinearImpulse(b2Vec2(-5, 0), body->GetWorldCenter(), true);
+		break;
+	case false:
+		std::cout<<"2true "<<std::endl;
+		body->ApplyLinearImpulse(b2Vec2(5, 0), body->GetWorldCenter(), true);
+		break;
+		
+		
+	}
+	if(this->body->GetPosition().x>30&&this->body->GetPosition().x<31)
+	{
+		flag=true;
+		
+	}if(this->body->GetPosition().x>0&&this->body->GetPosition().x<1)
+	{
+		flag=false;
+	
+	}
+	std::cout<<this->body->GetPosition().x<<std::endl;
 	this->setPosition(this->body->GetPosition().x * SCALE, this->body->GetPosition().y * SCALE);
 	this->setRotation(this->body->GetAngle());
 	this->sprite.setRotation(this->getRotation());
 }
 
-void BaseEntity::UpdateChildren()
+void BaseEntity::UpdateChildren(std::map<Input::states, std::string>* keyspressed)
 {
-	for (auto child : this->children)
+	/*for (auto child : this->children)
 	{
 		child->m_setpositionb2d(this->body->GetPosition().x + child->body->GetPosition().x
 		                        , this->body->GetPosition().y + child->body->GetPosition().y);
 		child->body->SetTransform(child->body->GetPosition(), this->body->GetAngle() + child->body->GetAngle());
-	}
+	}*/
 }
 
 void BaseEntity::setSprite(sf::Sprite newsprite)
@@ -167,6 +192,7 @@ void BaseEntity::m_setfrictionb2d(float value)
 
 void BaseEntity::Initialize()
 {
+	flag=false;
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0.0f, 4.0f);
@@ -220,7 +246,6 @@ Collectable::Collectable(int id, b2World* world)
 
 Collectable::~Collectable()
 {
-
 }
 
 
@@ -241,17 +266,15 @@ void Collectable::Initialize()
 
 void Collectable::Update(std::map<Input::states, std::string>* keyspressed)
 {
-	if(this->readyToBeDeleted!=true)
+	if (this->readyToBeDeleted != true)
 	{
 		for (b2ContactEdge* ce = this->body->GetContactList(); ce; ce = ce->next)
-	{
-		b2Contact* c = ce->contact;
-		if (c->IsTouching())
 		{
-			this->readyToBeDeleted = true;
+			b2Contact* c = ce->contact;
+			if (c->IsTouching())
+			{
+				this->readyToBeDeleted = true;
+			}
 		}
 	}
-	}
-	
-
 }

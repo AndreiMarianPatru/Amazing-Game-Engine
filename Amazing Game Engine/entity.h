@@ -53,7 +53,7 @@ public:
 	void RemoveChild(int id);
 
 	virtual void Update(std::map<Input::states, std::string>* keyspressed);
-	virtual void UpdateChildren();
+	virtual void UpdateChildren(std::map<Input::states, std::string>* keyspressed);
 
 
 	void m_setpositionb2d(float x, float y);
@@ -70,7 +70,7 @@ class BaseEntity : public Object
 {
 public:
 
-
+	bool flag;
 	/**
 	 * Base constructor, defaults all variables.
 	 */
@@ -93,7 +93,7 @@ public:
 
 
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
-	void UpdateChildren() override;
+	void UpdateChildren(std::map<Input::states, std::string>* keyspressed) override;
 
 	void setSprite(sf::Sprite newsprite);
 	void m_setshapeb2d();

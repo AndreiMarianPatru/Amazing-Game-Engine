@@ -1,5 +1,2 @@
 ﻿  entity.cpp
-  main.cpp
-C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\main.cpp(101,23): warning C4305: 'argument': truncation from 'double' to 'float'
-  Generating Code...
   Amazing Game Engine.vcxproj -> C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\Debug\Amazing Game Engine.exe
