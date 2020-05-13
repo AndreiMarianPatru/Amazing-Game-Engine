@@ -178,12 +178,6 @@ void BaseEntity::Update(std::map<Input::states, std::string>* keyspressed)
 
 void BaseEntity::UpdateChildren(std::map<Input::states, std::string>* keyspressed)
 {
-	/*for (auto child : this->children)
-	{
-		child->m_setpositionb2d(this->body->GetPosition().x + child->body->GetPosition().x
-		                        , this->body->GetPosition().y + child->body->GetPosition().y);
-		child->body->SetTransform(child->body->GetPosition(), this->body->GetAngle() + child->body->GetAngle());
-	}*/
 }
 
 void BaseEntity::setSprite(sf::Sprite newsprite)
@@ -259,8 +253,8 @@ void Player::Update(std::map<Input::states, std::string>* keyspressed)
 
 
 	this->setPosition(this->body->GetPosition().x * SCALE, this->body->GetPosition().y * SCALE);
-	// this->setRotation(this->body->GetAngle());
-	//this->sprite.setRotation(this->getRotation());	
+	this->setRotation(this->body->GetAngle());
+    this->sprite.setRotation(this->getRotation());	
 }
 
 Collectable::Collectable(int id, b2World* world)

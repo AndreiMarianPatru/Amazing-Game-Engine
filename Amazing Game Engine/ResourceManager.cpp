@@ -9,6 +9,7 @@ ResourceManager::~ResourceManager()
 {
 }
 
+//insert the name you want to use for your image and the location of the image and sotre it in the map called images. works with most image types 
 void ResourceManager::loadImageWithName(std::string name, std::string location)
 {
 	sf::Texture* texture = new sf::Texture;
@@ -18,6 +19,7 @@ void ResourceManager::loadImageWithName(std::string name, std::string location)
 	images.insert(std::pair<std::string, sf::Sprite*>(name, sprite));
 }
 
+//insert the name you want to use for your sound and the location of the image and sotre it in the map called images
 void ResourceManager::loadSoundWithName(std::string name, std::string location)
 {
 	sf::SoundBuffer* buffer = new sf::SoundBuffer;
@@ -30,6 +32,7 @@ void ResourceManager::loadSoundWithName(std::string name, std::string location)
 	sounds.insert(std::pair<std::string, sf::Sound*>(name, sound));
 }
 
+//search and return an image form the images map, returns a sf::sprite
 sf::Sprite ResourceManager::searchForImage(std::string name)
 {
 	if (images.find(name) == images.end())
@@ -38,6 +41,7 @@ sf::Sprite ResourceManager::searchForImage(std::string name)
 		return *images.find(name)->second;
 }
 
+//search for a sound and if it exists play it
 void ResourceManager::playsound(std::string name)
 {
 	for (auto it = sounds.begin(); it != sounds.end(); ++it)

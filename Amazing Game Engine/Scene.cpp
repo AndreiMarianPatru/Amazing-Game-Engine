@@ -48,3 +48,10 @@ void SceneManager::LoadScene(int index)
 		}
 	}
 }
+
+bool SceneManager::sort(std::shared_ptr<Object> a, std::shared_ptr<Object> b)
+{
+	return a->ZOrder<b->ZOrder;
+}
+
+

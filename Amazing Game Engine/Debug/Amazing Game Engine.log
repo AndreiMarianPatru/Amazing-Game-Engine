@@ -1,3 +1,9 @@
-﻿  main.cpp
-C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\main.cpp(96,24): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  ResourceManager.cpp
+  Scene.cpp
+  entity.cpp
+  main.cpp
+C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\main.cpp(103,24): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\main.cpp(109,24): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
+C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\ResourceManager.cpp(42): warning C4715: 'ResourceManager::searchForImage': not all control paths return a value
   Amazing Game Engine.vcxproj -> C:\Users\Andrei-Marian\Desktop\OneDrive - University of Suffolk\game-engine\Amazing Game Engine\Debug\Amazing Game Engine.exe

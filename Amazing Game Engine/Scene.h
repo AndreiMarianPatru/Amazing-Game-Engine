@@ -28,4 +28,5 @@ public:
 	SceneManager();
 	void AddScene(Scene* scene);
 	void LoadScene(int index);
+	bool sort(std::shared_ptr<Object> a,std::shared_ptr<Object> b);
 };

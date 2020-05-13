@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <memory>
+#include <algorithm>
 
 #include "ResourceManager.h"
 #include "entity.h"
@@ -17,6 +18,8 @@ float screenHeight = 1000;
 
 ResourceManager resource_manager;
 
+
+//set the positions of the objects for scene 1
 void inline setScene1(Player& player, BaseEntity& enemy1)
 {
 	player.m_setpositionb2d(10, 24);
@@ -24,6 +27,7 @@ void inline setScene1(Player& player, BaseEntity& enemy1)
 	//	enemy2.m_setpositionb2d(25, 24);
 }
 
+//set the positions of the objects for scene 2
 void inline setScene2(Player& player, BaseEntity& enemy1, BaseEntity& enemy2)
 {
 	player.m_setpositionb2d(3, 24);
@@ -81,12 +85,15 @@ int main()
 	resource_manager.loadImageWithName("flag", "assets/flag.png");
 	resource_manager.loadImageWithName("bob", "assets/bob.png");
 	resource_manager.loadSoundWithName("sound1", "assets/sound1.wav");
-	resource_manager.loadImageWithName("ground", "assets/ground2.png");
-	resource_manager.loadImageWithName("enemy","assets/enemy.png");
+	resource_manager.loadImageWithName("ground", "assets/ground2.png");;
 	resource_manager.loadImageWithName("coin", "assets/coin.png");
+	resource_manager.loadImageWithName("background","assets/background.jpg");
 
+	Object background(4,"background",1,resource_manager.searchForImage("background"),world);
+	std::shared_ptr<Object> copybgground(&background);
 
-	Object ground(0,"ground",0,resource_manager.searchForImage("ground"),world);
+	
+	Object ground(0,"ground",2,resource_manager.searchForImage("ground"),world);
 	ground.setPosition(0, 770);
 	ground.setScale(3.6f, 1.5f);
 	std::shared_ptr<Object> copyground(&ground);
@@ -97,42 +104,37 @@ int main()
 	coin.Initialize();
 	std::shared_ptr<Object> copycoin(&coin);
 
-	Player player(2,"player",2,resource_manager.searchForImage("bob"),world);
+	Collectable flag(1,"flag",3,resource_manager.searchForImage("flag"),world);
+	flag.setPosition(900, 600);
+	flag.setScale(0.7, 0.7);
+	flag.Initialize();
+	flag.m_setpositionb2d(40.0f, 22.0f);
+	std::shared_ptr<Object> copyflag(&flag);
+
+	Player player(2,"player",3,resource_manager.searchForImage("bob"),world);
 	player.Initialize();
 	player.m_setfrictionb2d(2.0f);
 	std::shared_ptr<Player> copyplayer(&player);
 
 
-	BaseEntity enemy1(3,"enemy",2,resource_manager.searchForImage("bob"),world);
+	BaseEntity enemy1(3,"enemy",3,resource_manager.searchForImage("bob"),world);
 	enemy1.Initialize();
-	//enemy1.setScale(0.1f,0.1f);
-	enemy1.name = "enemy1";
-
-
 	enemy1.m_setfrictionb2d(2.0f);
 	std::shared_ptr<BaseEntity> copyenemy1(&enemy1);
 
 
-	/*BaseEntity enemy2(world);
-	enemy2.setSprite(resource_manager.searchForImage("bob"));
-	enemy2.Initialize();
-	enemy2.name = "enemy2";*/
-
-
-	//enemy2.m_setfrictionb2d(2.0f);
-	//std::shared_ptr<BaseEntity> copyenemy2(&enemy2);
-
 	scene1.AddObjectToScene(copyground);
 	scene1.AddObjectToScene(copyplayer);
 	scene1.AddObjectToScene(copyenemy1);
-	//scene1.AddObjectToScene(copyenemy2);
+	scene1.AddObjectToScene(copybgground);
 	scene1.AddObjectToScene(copycoin);
+	scene1.AddObjectToScene(copyflag);
 
 
 	scene2.AddObjectToScene(copyground);
 	scene2.AddObjectToScene(copyplayer);
 	scene2.AddObjectToScene(copyenemy1);
-
+	scene2.AddObjectToScene(copybgground);
 	scene_manager.AddScene(&scene1);
 	scene_manager.AddScene(&scene2);
 
@@ -149,8 +151,6 @@ int main()
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
-
-
 	polygonShape.SetAsBox(20, 1, b2Vec2(25, screenHeight / SCALE), 0); //ceiling
 	staticBody->CreateFixture(&myFixtureDef);
 	polygonShape.SetAsBox(1, 20, b2Vec2(-(SCALE / 10), 20), 0); //left wall
@@ -192,7 +192,8 @@ int main()
 			input->Tpressed = false;
 		}
 
-
+		//sort the active objects by the ZOreder int so they can be rendered in the right order
+		scene_manager.activeObjects.sort([](std::shared_ptr<Object> a, std::shared_ptr<Object> b) {return a->ZOrder < b->ZOrder; });	
 		for (auto entity : scene_manager.activeObjects)
 		{
 			entity->Update(input->keyspressed);
@@ -208,7 +209,6 @@ int main()
 				break;
 			}
 		}
-		//scene_manager.activeObjects.clear();
 		window.display();
 	}
 

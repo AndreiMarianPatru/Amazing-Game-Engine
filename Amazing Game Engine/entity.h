@@ -73,12 +73,11 @@ public:
 
 	bool flag;
 	/**
-	 * Base constructor, defaults all variables.
+	 * Base constructor, defaults all variables but the world.
 	 */
 	BaseEntity(b2World* world);
 	/**
-	 * Constructor that accepts a texture file name
-	 * @param file a string filename
+	 * full constructor, sets it, name, zorder, sprite and world
 	 */
 	BaseEntity(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);
 	/**
@@ -86,15 +85,22 @@ public:
 	 */
 	virtual ~BaseEntity();
 
-
+	//creates and sets the physics 
 	virtual void Initialize();
 
 
+	//sets the logic used for enemy NPC, it is called each frame in the main loop
 	void Update(std::map<Input::states, std::string>* keyspressed) override;
+
 	void UpdateChildren(std::map<Input::states, std::string>* keyspressed) override;
 
+	//sets the sprite for this entity 
 	void setSprite(sf::Sprite newsprite);
+
+	//set the position. It uses box2d coords( real coords/scale). sets position for the physics body and updates the position drawn body
 	void m_setshapeb2d();
+
+	//set the friction for the physics body
 	void m_setfrictionb2d(float value);
 public:
 };
