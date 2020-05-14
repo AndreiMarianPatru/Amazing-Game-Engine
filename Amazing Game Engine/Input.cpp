@@ -73,6 +73,3 @@ void Input::CheckForInput(sf::Window& window)
 	}
 }
 
-void Input::UseInput()
-{
-}

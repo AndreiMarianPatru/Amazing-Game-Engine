@@ -15,10 +15,10 @@ public:
 		jump,
 	};
 
-	Input();
-	std::map<states, std::string>* keyspressed;
-	//I need a map and not a list for to make  key remapping easier to implement
+	Input();//basic constructor
+	std::map<states, std::string>* keyspressed;//a map is used and not a list for to make  key remapping easier to implement
+	
 
-	void CheckForInput(sf::Window& window);
-	void UseInput();
+	void CheckForInput(sf::Window& window);//check if there is any new input from the keyboard, if there is any store it in the keyspressed map
+
 };

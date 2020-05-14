@@ -149,16 +149,16 @@ void Object::m_setpositionb2d(float x, float y) //set position using b2d coords
 
 void BaseEntity::Update(std::map<Input::states, std::string>* keyspressed)
 {
-	std::cout << "flag1 " << flag << std::endl;
+	
 
 	switch (flag)
 	{
 	case true:
-		std::cout << "1false " << std::endl;
+		
 		body->ApplyLinearImpulse(b2Vec2(-5, 0), body->GetWorldCenter(), true);
 		break;
 	case false:
-		std::cout << "2true " << std::endl;
+		
 		body->ApplyLinearImpulse(b2Vec2(5, 0), body->GetWorldCenter(), true);
 		break;
 	}
@@ -170,7 +170,7 @@ void BaseEntity::Update(std::map<Input::states, std::string>* keyspressed)
 	{
 		flag = false;
 	}
-	std::cout << this->body->GetPosition().x << std::endl;
+	
 	this->setPosition(this->body->GetPosition().x * SCALE, this->body->GetPosition().y * SCALE);
 	this->setRotation(this->body->GetAngle());
 	this->sprite.setRotation(this->getRotation());

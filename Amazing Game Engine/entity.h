@@ -110,7 +110,7 @@ public:
 
 	Player(b2World* world);//basic constructor, sets just the physics world
 	Player(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);//most advanced constructor, sets the id, name, ZOrder(which is the way in which the Objects are rendered,the sprite of the object and the physics world
-	void Update(std::map<Input::states, std::string>* keyspressed) override;//uses keyboard input to move the player
+	void Update(std::map<Input::states, std::string>* keyspressed) override;//uses keyboard input to move the player; use W to jump, A and D to move horizontally 
 };
 
 class Collectable : public Object

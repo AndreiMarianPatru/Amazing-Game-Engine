@@ -204,6 +204,7 @@ int main()
 		{
 			if (entity->readyToBeDeleted)
 			{
+				resource_manager.playsound("sound1");
 				entity->world->DestroyBody(entity->body);
 				scene_manager.activeObjects.remove(entity);
 				break;
