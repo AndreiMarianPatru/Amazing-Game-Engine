@@ -28,22 +28,21 @@ public:
 
 	int id;
 	std::string name;
-	int ZOrder{};
-	std::list<Object*> children;
+	int ZOrder;//Zorder is used to render objects in a specific way so the most important objects are rendered last( are the closest to the user)
+	std::list<Object*> children;//a list<Objects> to keep track of all the children of an object 
 	Object* parent;
 	b2Transform transform;
-	sf::Sprite sprite;
+	sf::Sprite sprite;//the sprite associated with an object
 	sf::Texture texture;
-	b2World* world;
-	b2Body* body;
-	bool readyToBeDeleted;
+	b2World* world;//all physics run in an "object" of type b2World so each object must be connected to the same b2World 
+	b2Body* body;//the "physics body" used by the physics engine, it is used for gravity, movement, collision detecting 
+	bool readyToBeDeleted;//this is a "flag" that says if the object is ready to be deleted from the "active objects" scene
 
-
-	Object(int id);
-	Object(int id, b2World* world);
-	Object(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);
-	Object();
-	~Object();
+	Object();//most basic constructor, defaults everything
+	Object(int id);//basic constructor sets just the id
+	Object(int id, b2World* world);//this constructor sets the id and the links the object to the physics world 
+	Object(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);//most advanced constructor, sets the id, name, ZOrder(which is the way in which the Objects are rendered,the sprite of the object and the physics world
+	~Object();//default destructor 
 
 	void SetParent(Object* parent);
 	Object* GetParent();
@@ -53,17 +52,17 @@ public:
 	void AddChild(Object* object);
 	void RemoveChild(int id);
 
-	virtual void Update(std::map<Input::states, std::string>* keyspressed);
-	virtual void UpdateChildren(std::map<Input::states, std::string>* keyspressed);
+	virtual void Update(std::map<Input::states, std::string>* keyspressed);//this it meant to be overwritten by each child class 
+	virtual void UpdateChildren(std::map<Input::states, std::string>* keyspressed);//this it meant to be overwritten by each child class 
 
 
-	void m_setpositionb2d(float x, float y);
+	void m_setpositionb2d(float x, float y);//set the position. It uses box2d coords( real coords/scale). sets position for the physics body and updates the position drawn body
 
-	void PrintChildren();
-	void SetSprite(sf::Sprite sprite);
-	sf::Sprite GetSprite();
-	void SetTexture(sf::Texture texture);
-	sf::Texture GetTexture();
+	void PrintChildren();//debugging purposes, prints the id of each child
+	void SetSprite(sf::Sprite sprite);//sets the sprite of an object
+	sf::Sprite GetSprite();//returns the sprite of an Object
+	void SetTexture(sf::Texture texture);//sets the texture of an object
+	sf::Texture GetTexture();//return the texture of an object
 };
 
 
@@ -109,17 +108,17 @@ class Player : public BaseEntity
 {
 public:
 
-	Player(b2World* world);
-	Player(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);
-	void Update(std::map<Input::states, std::string>* keyspressed) override;
+	Player(b2World* world);//basic constructor, sets just the physics world
+	Player(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);//most advanced constructor, sets the id, name, ZOrder(which is the way in which the Objects are rendered,the sprite of the object and the physics world
+	void Update(std::map<Input::states, std::string>* keyspressed) override;//uses keyboard input to move the player
 };
 
 class Collectable : public Object
 {
 public:
-	Collectable(int id, b2World* world);
-	Collectable(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);
-	~Collectable();
-	void Initialize();
-	void Update(std::map<Input::states, std::string>* keyspressed) override;
+	Collectable(int id, b2World* world);//basic constructor, sets just the physics world
+	Collectable(int id, std::string name,int ZOrder,sf::Sprite sprite,b2World*world);//most advanced constructor, sets the id, name, ZOrder(which is the way in which the Objects are rendered,the sprite of the object and the physics world
+	~Collectable();//default destructor
+	void Initialize();//sets the "physics parts" for the collectable. this need to be different than the basic one because the collectable acts like a trigger 
+	void Update(std::map<Input::states, std::string>* keyspressed) override;//if the player collides with the collectable, the collectable is set as ready to be deleted
 };
