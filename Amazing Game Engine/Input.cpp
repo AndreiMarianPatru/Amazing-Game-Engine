@@ -5,7 +5,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
-//player->body->ApplyLinearImpulse(b2Vec2(-10, 0), player->body->GetWorldCenter(), true);
+///player->body->ApplyLinearImpulse(b2Vec2(-10, 0), player->body->GetWorldCenter(), true);
 
 Input::Input()
 {

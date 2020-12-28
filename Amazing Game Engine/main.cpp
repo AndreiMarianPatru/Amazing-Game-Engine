@@ -19,15 +19,15 @@ float screenHeight = 1000;
 ResourceManager resource_manager;
 
 
-//set the positions of the objects for scene 1
+///set the positions of the objects for scene 1
 void inline setScene1(Player& player, BaseEntity& enemy1)
 {
 	player.m_setpositionb2d(10, 24);
 	enemy1.m_setpositionb2d(20, 24);
-	//	enemy2.m_setpositionb2d(25, 24);
+	///	enemy2.m_setpositionb2d(25, 24);
 }
 
-//set the positions of the objects for scene 2
+///set the positions of the objects for scene 2
 void inline setScene2(Player& player, BaseEntity& enemy1, BaseEntity& enemy2)
 {
 	player.m_setpositionb2d(3, 24);
@@ -41,36 +41,36 @@ int main()
 	window.setFramerateLimit(60);
 	Input* input = new Input();
 
-	// Define the gravity vector.
+	/// Define the gravity vector.
 	b2Vec2 gravity(0.0f, 10.0f);
 
-	// Construct a world object, which will hold and simulate the rigid bodies.
+	/// Construct a world object, which will hold and simulate the rigid bodies.
 	/*When the world destructor is called, all bodies and joints are freed. This can
 	create orphaned pointers.*/
 	b2World* world = new b2World(gravity);
 
-	// Define the ground body.
+	/// Define the ground body.
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, 37.5f);
 
 
-	// Call the body factory which allocates memory for the ground body
-	// from a pool and creates the ground box shape (also from a pool).
-	// The body is also added to the world.
+	/// Call the body factory which allocates memory for the ground body
+	/// from a pool and creates the ground box shape (also from a pool).
+	/// The body is also added to the world.
 	b2Body* groundBody = world->CreateBody(&groundBodyDef);
 
-	// Define the ground box shape.
+	/// Define the ground box shape.
 	b2PolygonShape groundBox;
 
-	// The extents are the half-widths of the box.
+	/// The extents are the half-widths of the box.
 	groundBox.SetAsBox(500.0f, 10.0f);
 
-	// Add the ground fixture to the ground body.
+	/// Add the ground fixture to the ground body.
 	groundBody->CreateFixture(&groundBox, 0.0f);
 
-	// Prepare for simulation. Typically we use a time step of 1/60 of a
-	// second (60Hz) and 10 iterations. This provides a high quality simulation
-	// in most game scenarios.
+	/// Prepare for simulation. Typically we use a time step of 1/60 of a
+	/// second (60Hz) and 10 iterations. This provides a high quality simulation
+	/// in most game scenarios.
 	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
@@ -141,7 +141,7 @@ int main()
 	scene_manager.LoadScene(1);
 	setScene1(player, enemy1);
 
-	//create invisible walls
+	///create invisible walls
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_staticBody;
 	myBodyDef.position.Set(0, 0);
@@ -151,15 +151,15 @@ int main()
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &polygonShape;
 	myFixtureDef.density = 1;
-	polygonShape.SetAsBox(20, 1, b2Vec2(25, screenHeight / SCALE), 0); //ceiling
+	polygonShape.SetAsBox(20, 1, b2Vec2(25, screenHeight / SCALE), 0); ///ceiling
 	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(1, 20, b2Vec2(-(SCALE / 10), 20), 0); //left wall
+	polygonShape.SetAsBox(1, 20, b2Vec2(-(SCALE / 10), 20), 0); ///left wall
 	staticBody->CreateFixture(&myFixtureDef);
-	polygonShape.SetAsBox(1, 20, b2Vec2((screenWidth / SCALE) - 1, 20), 0); //right wall
+	polygonShape.SetAsBox(1, 20, b2Vec2((screenWidth / SCALE) - 1, 20), 0); ///right wall
 	staticBody->CreateFixture(&myFixtureDef);
 
 
-	//enemy1.AddChild(&enemy2);
+	///enemy1.AddChild(&enemy2);
 
 
 	while (window.isOpen())
@@ -169,8 +169,8 @@ int main()
 
 		window.clear();
 
-		// Instruct the world to perform a single step of simulation.
-		// It is generally best to keep the time step and iterations fixed.
+		/// Instruct the world to perform a single step of simulation.
+		/// It is generally best to keep the time step and iterations fixed.
 		world->Step(timeStep, velocityIterations, positionIterations);
 
 		window.clear();
@@ -179,7 +179,7 @@ int main()
 		{
 			std::cout << "R";
 			scene_manager.LoadScene(1);
-			//setScene1(player, enemy1, enemy2);
+			///setScene1(player, enemy1, enemy2);
 			resource_manager.playsound("sound1");
 			input->Rpressed = false;
 		}
@@ -187,12 +187,12 @@ int main()
 		{
 			std::cout << "T";
 			scene_manager.LoadScene(2);
-			//setScene2(player, enemy1, enemy2);
+			///setScene2(player, enemy1, enemy2);
 			resource_manager.playsound("sound1");
 			input->Tpressed = false;
 		}
 
-		//sort the active objects by the ZOreder int so they can be rendered in the right order
+		///sort the active objects by the ZOreder int so they can be rendered in the right order
 		scene_manager.activeObjects.sort([](std::shared_ptr<Object> a, std::shared_ptr<Object> b) {return a->ZOrder < b->ZOrder; });	
 		for (auto entity : scene_manager.activeObjects)
 		{

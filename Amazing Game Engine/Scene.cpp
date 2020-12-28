@@ -35,7 +35,7 @@ void SceneManager::LoadScene(int index)
 			std::list<std::shared_ptr<Object>>::iterator it1;
 
 			this->activeObjects.clear();
-			//populate the active objects list
+			///populate the active objects list
 			for (it1 = (*it)->objects.begin(); it1 != (*it)->objects.end(); ++it1)
 			{
 				std::shared_ptr<Object> copy = (*it1);

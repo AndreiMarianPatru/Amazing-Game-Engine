@@ -141,7 +141,7 @@ BaseEntity::~BaseEntity()
 }
 
 
-void Object::m_setpositionb2d(float x, float y) //set position using b2d coords
+void Object::m_setpositionb2d(float x, float y) ///set position using b2d coords
 {
 	this->body->SetTransform(b2Vec2(x, y), 0);
 	this->setPosition(x * SCALE, y * SCALE);
@@ -233,7 +233,7 @@ Player::Player(int id, std::string name, int ZOrder, sf::Sprite sprite, b2World*
 
 void Player::Update(std::map<Input::states, std::string>* keyspressed)
 {
-	//std::cout<<"x "<<this->body->GetPosition().x<<" y "<<this->body->GetPosition().y<<std::endl;
+	///std::cout<<"x "<<this->body->GetPosition().x<<" y "<<this->body->GetPosition().y<<std::endl;
 	b2Vec2 vel = body->GetLinearVelocity();
 	float desiredVel = 0;
 	std::map<std::string, Input::states>::iterator it;
@@ -247,7 +247,7 @@ void Player::Update(std::map<Input::states, std::string>* keyspressed)
 
 
 	float velChange = desiredVel - vel.x;
-	float impulsex = body->GetMass() * velChange; //disregard time factor
+	float impulsex = body->GetMass() * velChange; ///disregard time factor
 
 	body->ApplyLinearImpulse(b2Vec2(impulsex, 0), body->GetWorldCenter(), true);
 
